@@ -13,19 +13,19 @@ const Home = () => {
         </TouchableOpacity>
         <View style={styles.centeredContainer}>
           <View style={styles.buttonRow}>
-            <TouchableOpacity style={styles.largeButton} onPress={() => alert('Button 1 clicked!')}>
-              <Text style={styles.buttonText}>Button 1</Text>
+            <TouchableOpacity style={styles.largeButton} onPress={() => alert('Crops clicked!')}>
+              <Text style={styles.buttonText}>Crops</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.largeButton} onPress={() => alert('Button 2 clicked!')}>
-              <Text style={styles.buttonText}>Button 2</Text>
+            <TouchableOpacity style={styles.largeButton} onPress={() => alert('Storage clicked!')}>
+              <Text style={styles.buttonText}>Storage</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.buttonRow}>
-            <TouchableOpacity style={styles.largeButton} onPress={() => alert('Button 3 clicked!')}>
-              <Text style={styles.buttonText}>Button 3</Text>
+            <TouchableOpacity style={styles.largeButton} onPress={() => alert('Tasks clicked!')}>
+              <Text style={styles.buttonText}>Tasks</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.largeButton} onPress={() => alert('Button 4 clicked!')}>
-              <Text style={styles.buttonText}>Button 4</Text>
+            <TouchableOpacity style={styles.largeButton} onPress={() => alert('Harvest clicked!')}>
+              <Text style={styles.buttonText}>Harvest</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   largeButton: {
     backgroundColor: 'green',
-    padding: 20,
+    padding: 40,
     borderRadius: 40,
     width: (screenWidth - 60) / 2, // Width divided by 2 with some spacing
     alignItems: 'center',
