@@ -15,6 +15,7 @@ export default function AddLivestock({ navigation, route }){
 
         await AsyncStorage.setItem('livestock', JSON.stringify(updateLivestock));
         setLivestock(updateLivestock);
+        navigation.goBack();
 
     };
     return (
