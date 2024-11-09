@@ -11,6 +11,22 @@ const Home = () => {
         <TouchableOpacity style={[styles.button, { width: screenWidth - 20 }]} onPress={() => alert('Tab clicked!')}>
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
+        <View style={styles.buttonRow}>
+          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Button 1 clicked!')}>
+            <Text style={styles.buttonText}>Button 1</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Button 2 clicked!')}>
+            <Text style={styles.buttonText}>Button 2</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.buttonRow}>
+          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Button 3 clicked!')}>
+            <Text style={styles.buttonText}>Button 3</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Button 4 clicked!')}>
+            <Text style={styles.buttonText}>Button 4</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -43,6 +59,16 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     textAlign: 'left', // Align text to the left
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    marginTop: 10, // Adds space between rows of buttons
+  },
+  smallButton: {
+    backgroundColor: 'green',
+    padding: 10,
+    borderRadius: 5,
+    marginRight: 10, // Adds space between buttons in the row
   },
 });
 
