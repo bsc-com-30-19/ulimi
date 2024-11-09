@@ -12,19 +12,19 @@ const Home = () => {
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Button 1 clicked!')}>
-            <Text style={styles.buttonText}>Button 1</Text>
+          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Crops button clicked!')}>
+            <Text style={styles.buttonText}>Crops</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Button 2 clicked!')}>
-            <Text style={styles.buttonText}>Button 2</Text>
+          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Storage Button Clicked')}>
+            <Text style={styles.buttonText}>Storage</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Button 3 clicked!')}>
-            <Text style={styles.buttonText}>Button 3</Text>
+          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Tasks Button clicked!')}>
+            <Text style={styles.buttonText}>Tasks</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Button 4 clicked!')}>
-            <Text style={styles.buttonText}>Button 4</Text>
+          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Harvest button clicked!')}>
+            <Text style={styles.buttonText}>Harvest</Text>
           </TouchableOpacity>
         </View>
       </View>
