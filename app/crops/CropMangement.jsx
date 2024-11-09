@@ -11,21 +11,23 @@ const Home = () => {
         <TouchableOpacity style={[styles.button, { width: screenWidth - 20 }]} onPress={() => alert('Tab clicked!')}>
           <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
-        <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Crops button clicked!')}>
-            <Text style={styles.buttonText}>Crops</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Storage Button Clicked')}>
-            <Text style={styles.buttonText}>Storage</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Tasks Button clicked!')}>
-            <Text style={styles.buttonText}>Tasks</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.smallButton} onPress={() => alert('Harvest button clicked!')}>
-            <Text style={styles.buttonText}>Harvest</Text>
-          </TouchableOpacity>
+        <View style={styles.centeredContainer}>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity style={styles.largeButton} onPress={() => alert('Button 1 clicked!')}>
+              <Text style={styles.buttonText}>Button 1</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.largeButton} onPress={() => alert('Button 2 clicked!')}>
+              <Text style={styles.buttonText}>Button 2</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity style={styles.largeButton} onPress={() => alert('Button 3 clicked!')}>
+              <Text style={styles.buttonText}>Button 3</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.largeButton} onPress={() => alert('Button 4 clicked!')}>
+              <Text style={styles.buttonText}>Button 4</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -35,14 +37,14 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start', // Align items at the start of the container
-    alignItems: 'flex-start', // Align items to the start horizontally
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   topLeftContainer: {
     position: 'absolute',
-    top: 10, // Distance from the top
-    left: 10, // Distance from the left
-    alignItems: 'flex-start', // Align items to the start horizontally within the container
+    top: 10,
+    left: 10,
+    alignItems: 'flex-start',
   },
   text: {
     fontSize: 20,
@@ -52,23 +54,31 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     padding: 10,
     borderRadius: 5,
-    marginTop: 20, // Adds space between the text and button
-    alignItems: 'flex-start', // Align text to the start horizontally within the button
+    marginTop: 20,
+    alignItems: 'flex-start',
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
-    textAlign: 'left', // Align text to the left
+    textAlign: 'left',
+  },
+  centeredContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30,
   },
   buttonRow: {
     flexDirection: 'row',
-    marginTop: 10, // Adds space between rows of buttons
+    justifyContent: 'space-between',
+    width: screenWidth - 40,
+    marginTop: 10,
   },
-  smallButton: {
+  largeButton: {
     backgroundColor: 'green',
-    padding: 10,
-    borderRadius: 5,
-    marginRight: 10, // Adds space between buttons in the row
+    padding: 20,
+    borderRadius: 10,
+    width: (screenWidth - 60) / 2, // Width divided by 2 with some spacing
+    alignItems: 'center',
   },
 });
 
