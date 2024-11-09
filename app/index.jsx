@@ -24,7 +24,7 @@ const Home = () => {
             <Text style={styles.buttonText}>Tasks</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.smallButton} onPress={() => alert('Harvest button clicked!')}>
-            <Text style={styles.buttonText}>Harvest button</Text>
+            <Text style={styles.buttonText}>Harvest</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginTop: 20, // Adds space between the text and button
-    alignItems: 'flex-start', // Align text to the start horizontally within the button
+    alignItems: 'flex-startflex-start', // Align text to the start horizontally within the button
   },
   buttonText: {
     color: 'white',
