@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import React from 'react';
+import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon library
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -9,7 +10,10 @@ const Home = () => {
       <View style={styles.topLeftContainer}>
         <Text style={styles.text}>CROP MANAGEMENT</Text>
         <TouchableOpacity style={[styles.button, { width: screenWidth - 20 }]} onPress={() => alert('Tab clicked!')}>
-          <Text style={styles.buttonText}>Back</Text>
+          <View style={styles.buttonContent}>
+            <Icon name="arrow-back" size={20} color="white" /> {/* Back icon */}
+            <Text style={styles.buttonText}>Back</Text>
+          </View>
         </TouchableOpacity>
         <View style={styles.centeredContainer}>
           <View style={styles.buttonRow}>
@@ -57,10 +61,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'flex-start',
   },
+  buttonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   buttonText: {
     color: 'white',
     fontSize: 16,
     textAlign: 'left',
+    marginLeft: 5, // Add some space between the icon and text
   },
   centeredContainer: {
     justifyContent: 'center',

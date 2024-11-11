@@ -5,7 +5,7 @@ export default function CropsScreen(){
 
     return(
         <Tabs>
-        <Tabs.Screen name="farmmanagement"/>
+        <Tabs.Screen name="farmmnagement"/>
         </Tabs>
     )
 }
