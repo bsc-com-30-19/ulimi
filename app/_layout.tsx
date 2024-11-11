@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 const RootLayout = () => {
   return (
+<<<<<<< HEAD
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -11,4 +12,8 @@ const RootLayout = () => {
       </Stack>
     </ThemeProvider>
   );
+=======
+    <Slot/>
+  )
+>>>>>>> pauls-work
 }
