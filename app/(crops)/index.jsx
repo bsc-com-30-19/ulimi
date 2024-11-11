@@ -12,7 +12,6 @@ const Home = () => {
         <TouchableOpacity style={[styles.button, { width: screenWidth - 20 }]} onPress={() => alert('Tab clicked!')}>
           <View style={styles.buttonContent}>
             <Icon name="arrow-back" size={20} color="white" /> {/* Back icon */}
-            <Text style={styles.buttonText}>Back</Text>
           </View>
         </TouchableOpacity>
         <View style={styles.centeredContainer}>
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     textAlign: 'left',
-    marginLeft: 5, // Add some space between the icon and text
+    marginLeft: 5,
   },
   centeredContainer: {
     justifyContent: 'center',
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     padding: 40,
     borderRadius: 40,
-    width: (screenWidth - 60) / 2, // Width divided by 2 with some spacing
+    width: (screenWidth - 60) / 2,
     alignItems: 'center',
   },
 });
