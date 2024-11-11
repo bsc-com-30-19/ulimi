@@ -4,10 +4,11 @@ import { StyleSheet, Text, View } from 'react-native'
 
 const RootLayout = () => {
   return (
-    <Slot />
-  )
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+    </ThemeProvider>
+  );
 }
-
-export default RootLayout
-
-const styles = StyleSheet.create({})
