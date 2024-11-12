@@ -1,49 +1,25 @@
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator} from '@react-navigation/native-stack';
+import LivestockScreen from '../Livestock/LivestockScreen';
+import ProduceScreen from '../Livestock/ProduceScreen';
+import TasksScreen from '../Livestock/TasksScreen';
+import HomeScreen from '../Livestock/HomeScreen';
+import LivestockDetails from '../Livestock/LivestockDetails';
 
-const { width: screenWidth } = Dimensions.get('window');
+const Stack = createNativeStackNavigator();
 
-const Home = () => {
+export default function index(){
   return (
-    <View style={styles.container}>
-      <View style={styles.topLeftContainer}>
-        <Text style={styles.text}>CROP MANAGEMENT</Text>
-        <TouchableOpacity style={[styles.button, { width: screenWidth - 20 }]} onPress={() => alert('Tab clicked!')}>
-          <Text style={styles.buttonText}>Back</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator >
+      <Stack.Screen name="HomeScreen" component={HomeScreen}/>
+        <Stack.Screen name="LivestockScreen" component={LivestockScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="Cattle" component={LivestockDetails}options={{ headerShown: false }} />
+        <Stack.Screen name="ProduceScreen" component={ProduceScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="TasksScreen" component={TasksScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="LivestockDetails" component={LivestockDetails} options={{ headerShown: false }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start', // Align items at the start of the container
-    alignItems: 'flex-start', // Align items to the start horizontally
-  },
-  topLeftContainer: {
-    position: 'absolute',
-    top: 10, // Distance from the top
-    left: 10, // Distance from the left
-    alignItems: 'flex-start', // Align items to the start horizontally within the container
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  button: {
-    backgroundColor: 'green',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 20, // Adds space between the text and button
-    alignItems: 'flex-start', // Align text to the start horizontally within the button
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'left', // Align text to the left
-  },
-});
-
-export default Home;
