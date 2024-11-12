@@ -9,18 +9,18 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Ulimi App</Text>
+        <Text style={styles.headerText}>Ulimi </Text>
       </View>
       <View style={styles.gridContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('LivestockScreen', { category: 'Livestock' })}
+          onPress={() => navigation.navigate('LivestockScreen', { category: 'Produce' })}
         >
           <Text style={styles.buttonText}>Livestock</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('ProduceScreen', { category: 'Produce' })}
+          onPress={() => navigation.navigate('ProduceScreen', { category: 'Livestock' })}
           
         >
           <Text style={styles.buttonText}>Produce</Text>

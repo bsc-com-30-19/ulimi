@@ -13,11 +13,12 @@ export default function index(){
   return (
     <NavigationContainer>
       <Stack.Navigator >
-      <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="Livestock" component={LivestockScreen}/>
-        <Stack.Screen name="Produce" component={ProduceScreen} />
-        <Stack.Screen name="TasksScreen" component={TasksScreen} />
-        <Stack.Screen name="LivestockDetails" component={LivestockDetails}/>
+      <Stack.Screen name="HomeScreen" component={HomeScreen}/>
+        <Stack.Screen name="LivestockScreen" component={LivestockScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="Cattle" component={LivestockDetails}options={{ headerShown: false }} />
+        <Stack.Screen name="ProduceScreen" component={ProduceScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="TasksScreen" component={TasksScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="LivestockDetails" component={LivestockDetails} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
