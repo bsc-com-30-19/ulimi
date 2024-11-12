@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon library
+import { Link } from 'expo-router';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -9,6 +10,12 @@ const Home = () => {
     <View style={styles.container}>
       <View style={styles.topLeftContainer}>
         <Text style={styles.text}>CROP MANAGEMENT</Text>
+        <Link href="/croppage" style={styles.button}>
+        Go to crops screen
+        </Link>
+        <Link href="/storage" style={styles.button}>
+        Go to storage screen
+        </Link>
         <TouchableOpacity style={[styles.button, { width: screenWidth - 20 }]} onPress={() => alert('Tab clicked!')}>
           <View style={styles.buttonContent}>
             <Icon name="arrow-back" size={20} color="white" /> {/* Back icon */}
@@ -55,7 +62,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: 'green',
-    padding: 10,
+    padding: 20,
     borderRadius: 5,
     marginTop: 20,
     alignItems: 'flex-start',
@@ -87,6 +94,16 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     width: (screenWidth - 60) / 2,
     alignItems: 'center',
+  },
+  button: {
+    fontSize: 20,
+    textDecorationLine: 'underline',
+    color: 'black',
+  },
+  button: {
+    fontSize: 20,
+    textDecorationLine: 'underline',
+    color: 'black',
   },
 });
 

@@ -1,11 +1,10 @@
-import { Tabs } from "expo-router"
+import { Stack } from 'expo-router';
 
-
-export default function CropsScreen(){
-
-    return(
-        <Tabs>
-        <Tabs.Screen name="farmmnagement"/>
-        </Tabs>
-    )
+export default function RootLayout() {
+  return (
+    <Stack>
+      <Stack.Screen name="index" options={{ title: 'Home' }} />
+      <Stack.Screen name="croppage" options={{ title: 'croppage' }} />
+    </Stack>
+  );
 }
