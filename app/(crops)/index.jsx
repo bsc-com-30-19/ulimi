@@ -17,7 +17,7 @@ const Home = () => {
       <View style={styles.topLeftContainer}>
         <Text style={styles.text}>CROP MANAGEMENT</Text>
 
-        {/* Menu toggle button */}
+        {/* Menu button */}
         <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
           <Icon name="menu" size={24} color="white" />
         </TouchableOpacity>
