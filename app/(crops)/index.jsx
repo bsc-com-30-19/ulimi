@@ -16,6 +16,12 @@ const Home = () => {
         <Link href="/storage" style={styles.button}>
         Go to storage screen
         </Link>
+        <Link href="/Tasks" style={styles.button}>
+        Go to Tasks screen
+        </Link>
+        <Link href="/Harvest" style={styles.button}>
+        Go to Harvest screen
+        </Link>
         <TouchableOpacity style={[styles.button, { width: screenWidth - 20 }]} onPress={() => alert('Tab clicked!')}>
           <View style={styles.buttonContent}>
             <Icon name="arrow-back" size={20} color="white" /> {/* Back icon */}
