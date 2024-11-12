@@ -1,4 +1,6 @@
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { Image } from 'expo-image';
+import WeatherListItem from '@/components/weather/WeatherListItem';
 
 export default function WeatherScreen() {
   return (
@@ -12,7 +14,7 @@ export default function WeatherScreen() {
       </View>
 
       <View className="bg-[#A6D6E8] mt-[18px] rounded-[18px] max-w-[358px]">
-        <View className="flex justify-between flex-row mt-4 mx-4">
+        <View className="flex flex-row justify-between mx-4 mt-4">
           <View>
             <Text className="text-base font-semibold">This Week’s Weather</Text>
           </View>
@@ -21,21 +23,12 @@ export default function WeatherScreen() {
           </View>
         </View>
 
-        <View className="mt-[31px] mb-4">
-          <View className="mx-4 flex flex-row justify-between">
-            <View>
-              <View></View>
-
-              <View>
-                <Text className="text-[14px] font-medium">Tuesday</Text>
-                <Text className="text-[14px]">12 Nov</Text>
-              </View>
-            </View>
-
-            <View>
-              <Text className="text-[18px] font-medium">30°C</Text>
-            </View>
-          </View>
+        <View className="mt-2">
+          <WeatherListItem />
+          <WeatherListItem />
+          <WeatherListItem />
+          <WeatherListItem />
+          <WeatherListItem />
         </View>
       </View>
     </View>
