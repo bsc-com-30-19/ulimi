@@ -8,6 +8,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import "../global.css"
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -36,7 +37,7 @@ export default function RootLayout() {
         <Stack.Screen name="(crops)" options={{ headerShown: false }} />
         <Stack.Screen name="(weather)" options={{ headerShown: false }} />
         <Stack.Screen name="(data_viz)" options={{ headerShown: false }} />
-
+        <Stack.Screen name="(crops)" options={{ title:'Crops', headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
     </ThemeProvider>

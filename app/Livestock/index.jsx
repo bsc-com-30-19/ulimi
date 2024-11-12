@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const HomeScreen = () => {
+const index = () => {
   const navigation = useNavigation();
 
   return (
@@ -73,4 +73,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default index;
