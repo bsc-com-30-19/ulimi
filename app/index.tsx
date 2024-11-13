@@ -1,5 +1,6 @@
 import { Link } from 'expo-router';
 import { Text, View } from 'react-native';
+import "../global.css"
 
 export default function Index() {
   return (
@@ -15,6 +16,7 @@ export default function Index() {
       <Link href="/(weather)"> weather </Link>
       <Link href="/(data_viz)"> data visualisation </Link>
       <Link href="/(helpSupport)"> help and support </Link>
+      <Link href="/auth"> Sign Up!</Link>
     </View>
   );
 }
