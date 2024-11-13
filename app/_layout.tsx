@@ -35,6 +35,7 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(weather)" options={{ headerShown: false }} />
+        <Stack.Screen name="(helpSupport)" options={{ headerShown: false }} />
         <Stack.Screen name="(data_viz)" options={{ headerShown: false }} />
         <Stack.Screen
           name="(crops)"
