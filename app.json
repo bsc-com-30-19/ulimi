@@ -29,6 +29,9 @@
     "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "apiKey": "JVtwGAh2UCX1rI44XBWZiOu1mNmUvASM"
     }
   }
 }
