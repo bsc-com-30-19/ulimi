@@ -1,9 +1,9 @@
 import { Text, StyleSheet, View } from 'react-native';
 
-export default function WeatherScreen() {
+export default function DataScreen() {
   return (
     <View>
-      <Text>Data visualisation</Text>
+      <Text className="text-lg">Data visualisation</Text>
     </View>
   );
 }
