@@ -14,6 +14,7 @@ export default function Index() {
       <Link href="/(crops)"> crops </Link>
       <Link href="/(weather)"> weather </Link>
       <Link href="/(data_viz)"> data visualisation </Link>
+      <Link href="/(helpSupport)"> help and support </Link>
     </View>
   );
 }
