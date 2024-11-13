@@ -1,8 +1,8 @@
-import { View, Text } from 'react-native';
+import { View, Text, TextInput, ScrollView } from 'react-native';
 
 export default function HelpScreen() {
   return (
-    <View className="flex max-w-[390] mx-5 mt-[40px]">
+    <ScrollView className="flex max-w-[390] mx-5 mt-[40px]">
       <View>
         <Text className="text-base font-medium ">
           Frequently Asked Questions
@@ -15,7 +15,7 @@ export default function HelpScreen() {
           </Text>
         </View>
         <View>
-          <Text className="text-[#3C4E67] mt-[12px]">
+          <Text className="text-[#3C4E67] mt-[12px] max-w-[358px]">
             To add a new crop or livestock entry, go to the "Dashboard" and
             select either "Crops" or "Livestock." Then, click on the "Add New"
             button and fill in the required details, such as the crop type,
@@ -31,7 +31,7 @@ export default function HelpScreen() {
             </Text>
           </View>
           <View className="">
-            <Text className="text-[#3C4E67] mt-[12px]">
+            <Text className="text-[#3C4E67] mt-[12px] max-w-[358px]">
               You can view your income and expenses by navigating to the
               "Finance" section. Here, you will see a list view that shows each
               entry by category, date, and amount.
@@ -39,9 +39,21 @@ export default function HelpScreen() {
           </View>
         </View>
 
-        <View></View>
-        <View></View>
+        <View className="mt-[126px]">
+          <Text className="text-base font-medium">Send us a message</Text>
+          <TextInput
+            placeholder="Enter a Message..."
+            multiline
+            numberOfLines={8}
+            className="max-w-[358px] h-[166px] bg-[#F1F7FF] border border-[#75787C] mt-2 rounded-2 p-2"
+          />
+        </View>
+        <View>
+          <View className="bg-[#37520B] h-[44px] max-w-[358px] w-full mt-3 mb-[51px] rounded-sm flex items-center justify-center">
+            <Text className="text-[#F9FBFF]">Send</Text>
+          </View>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
