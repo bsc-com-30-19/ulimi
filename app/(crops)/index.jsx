@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon library
 import { Link } from 'expo-router'; // Import Link from expo-router
 
-const { width: screenWidth } = Dimensions.get('window');
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const Home = () => {
   const [menuVisible, setMenuVisible] = useState(false);
@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <View style={styles.topLeftContainer}>
-        <Text style={styles.text}>CROP MANAGEMENT</Text>
+        <Text style={styles.titleText}>CROP MANAGEMENT</Text>
 
         {/* Menu button */}
         <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
@@ -40,8 +40,9 @@ const Home = () => {
           </View>
         )}
 
-        <TouchableOpacity style={[styles.button, { width: screenWidth - 20 }]} onPress={() => alert('Tab clicked!')}>
+        <TouchableOpacity style={[styles.backButton, { width: screenWidth - 20 }]} onPress={() => alert('Tab clicked!')}>
           <View style={styles.buttonContent}>
+            <Text style={styles.backButtonText}>CROP MANAGEMENT</Text>
             <Icon name="arrow-back" size={20} color="white" /> {/* Back icon */}
           </View>
         </TouchableOpacity>
@@ -79,9 +80,10 @@ const styles = StyleSheet.create({
     left: 10,
     alignItems: 'flex-start',
   },
-  text: {
+  titleText: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: 'black',
   },
   menuButton: {
     backgroundColor: 'green',
@@ -100,22 +102,24 @@ const styles = StyleSheet.create({
     color: 'white',
     marginVertical: 5,
   },
-  button: {
+  backButton: {
     backgroundColor: 'green',
     padding: 20,
     borderRadius: 5,
     marginTop: 20,
-    alignItems: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   buttonContent: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between', // Align the items on opposite ends
+    width: '100%',
   },
-  buttonText: {
+  backButtonText: {
     color: 'white',
-    fontSize: 16,
-    textAlign: 'left',
-    marginLeft: 5,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   centeredContainer: {
     flex: 1,
@@ -131,11 +135,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     padding: 20,
     borderRadius: 5,
-    margin: 10,
-    width: screenWidth * 0.4, // Make the button take 40% of the screen width
+    margin: 8,
+    width: screenWidth * 0.1, // Make the button take 40% of the screen width
     aspectRatio: 1, // Make the button square
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
   },
 });
 
