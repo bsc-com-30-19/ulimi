@@ -22,7 +22,7 @@ const Home = () => {
           <Icon name="menu" size={24} color="white" />
         </TouchableOpacity>
 
-        {/* this is the menu, where the crops, storageand and harveztt screen will be found*/}
+        {/* Menu */}
         {menuVisible && (
           <View style={styles.menu}>
             <Link href="/croppage" style={styles.menuItem}>
@@ -72,8 +72,6 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
   },
   topLeftContainer: {
     position: 'absolute',
@@ -120,21 +118,23 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   centeredContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
   },
   buttonRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: screenWidth - 40,
+    justifyContent: 'center',
     marginTop: 10,
   },
   largeButton: {
     backgroundColor: 'green',
-    padding: 40,
-    borderRadius: 40,
-    width: (screenWidth - 60) / 2,
+    padding: 20,
+    borderRadius: 5,
+    margin: 10,
+    width: screenWidth * 0.4, // Make the button take 40% of the screen width
+    aspectRatio: 1, // Make the button square
+    justifyContent: 'center',
     alignItems: 'center',
   },
 });
