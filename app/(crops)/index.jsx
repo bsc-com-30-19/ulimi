@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ImageBackground } from 'react-native';
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon library
 import { Link } from 'expo-router'; // Import Link from expo-router
@@ -50,18 +50,26 @@ const Home = () => {
         <View style={styles.centeredContainer}>
           <View style={styles.buttonRow}>
             <TouchableOpacity style={styles.largeButton} onPress={() => alert('Crops clicked!')}>
-              <Text style={styles.buttonText}>Crops</Text>
+              <ImageBackground source={require('./assets/crops.jpg')} style={styles.imageBackground}>
+                <Text style={styles.buttonText}>Crops</Text>
+              </ImageBackground>
             </TouchableOpacity>
             <TouchableOpacity style={styles.largeButton} onPress={() => alert('Storage clicked!')}>
-              <Text style={styles.buttonText}>Storage</Text>
+              <ImageBackground source={require('./assets/storage.jpg')} style={styles.imageBackground}>
+                <Text style={styles.buttonText}>Storage</Text>
+              </ImageBackground>
             </TouchableOpacity>
           </View>
           <View style={styles.buttonRow}>
             <TouchableOpacity style={styles.largeButton} onPress={() => alert('Tasks clicked!')}>
-              <Text style={styles.buttonText}>Tasks</Text>
+              <ImageBackground source={require('./assets/tasks.jpg')} style={styles.imageBackground}>
+                <Text style={styles.buttonText}>Tasks</Text>
+              </ImageBackground>
             </TouchableOpacity>
             <TouchableOpacity style={styles.largeButton} onPress={() => alert('Harvest clicked!')}>
-              <Text style={styles.buttonText}>Harvest</Text>
+              <ImageBackground source={require('./assets/harvest.jpg')} style={styles.imageBackground}>
+                <Text style={styles.buttonText}>Harvest</Text>
+              </ImageBackground>
             </TouchableOpacity>
           </View>
         </View>
@@ -136,8 +144,14 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 5,
     margin: 8,
-    width: screenWidth * 0.1, // Make the button take 40% of the screen width
+    width: screenWidth * 0.2, // Make the button take 40% of the screen width
     aspectRatio: 1, // Make the button square
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageBackground: {
+    width: '100%',
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -145,6 +159,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     textAlign: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)', // Optional: add a semi-transparent background to the text
+    padding: 5,
+    borderRadius: 5,
   },
 });
 
