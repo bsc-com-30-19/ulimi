@@ -13,10 +13,10 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "app/(crops)/index.jsx",
+    "app/crops/index.jsx",
     "app/+html.jsx",
     "app/_layout.jsx",
-    "app/(crops)/farmmanagement.tsx",
+    "app/crops/farmmanagement.tsx",
     "nativewind-env.d.ts"
-  ]
+, "app/(helpSupport)/_layout.jsx"  ]
 }
