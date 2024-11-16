@@ -6,7 +6,12 @@ export default function AboutScreen() {
       <View style={styles.topBar}>
         <Text style={styles.topBarText}>Crops</Text>
       </View>
-      <Text style={styles.text}>Crops</Text>
+      <View style={styles.listContainer}>
+        <Text style={styles.listItem}>🌽 Maize</Text>
+        <Text style={styles.listItem}>🚬 Tobacco</Text>
+        <Text style={styles.listItem}>🥜 Ground Nuts</Text>
+        <Text style={styles.listItem}>🥥 Cassava</Text>
+      </View>
     </View>
   );
 }
@@ -14,9 +19,9 @@ export default function AboutScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: 'white',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   topBar: {
     width: '100%',
@@ -29,11 +34,18 @@ const styles = StyleSheet.create({
   },
   topBarText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: '600', // Semi-bold
   },
-  text: {
-    color: 'white',
-    marginTop: 60, // Adjust based on the height of the top bar
+  listContainer: {
+    marginTop: 80, // Adjust based on the height of the top bar
+    marginLeft: 20, // Position the list a bit away from the left edge
+    alignItems: 'flex-start',
+  },
+  listItem: {
+    color: 'black',
+    fontSize: 45,
+    marginVertical: 30,
   },
 });
+
