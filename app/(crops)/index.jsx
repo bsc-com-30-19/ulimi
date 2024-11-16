@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 5,
     margin: 8,
-    width: screenWidth * 0.2, // Make the button take 40% of the screen width
+    width: screenWidth * 0.2, // Make the button take 20% of the screen width
     aspectRatio: 1, // Make the button square
     justifyContent: 'center',
     alignItems: 'center',
