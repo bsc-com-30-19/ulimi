@@ -37,6 +37,7 @@ export default function RootLayout() {
         <Stack.Screen name="(weather)" options={{ headerShown: false }} />
         <Stack.Screen name="(helpSupport)" options={{ headerShown: false }} />
         <Stack.Screen name="(data_viz)" options={{ headerShown: false }} />
+        <Stack.Screen name="Livestock" options={{ headerShown: false }} />
         <Stack.Screen
           name="(crops)"
           options={{ title: 'Crops', headerShown: false }}

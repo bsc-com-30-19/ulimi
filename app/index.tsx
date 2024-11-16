@@ -17,6 +17,7 @@ export default function Index() {
       <Link href="/(data_viz)"> data visualisation </Link>
       <Link href="/(helpSupport)"> help and support </Link>
       <Link href="/auth"> Sign Up!</Link>
+      <Link href="/Livestock"> Livestock</Link>
     </View>
   );
 }
