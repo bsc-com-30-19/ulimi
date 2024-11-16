@@ -1,49 +1,39 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import React from 'react';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import '../global.css';
+import Index from './index';
+import SignUp from './auth';
+import HelpScreen from './(helpSupport)';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Stack } from 'expo-router';
+import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from '@/app-throwaway/(tabs)/FarmManagement';
+import StackLayout from './(stack)/_layout';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+const Drawer = createDrawerNavigator();
+// const Stack = createNativeStackNavigator();
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+const StackNavigator = () =>{
+  <Stack>
+    <Stack.Screen name='(stack)' />
+  </Stack>
+}
+
+const DrawerNavigator = () =>{
+  return(
+    <Drawer.Navigator initialRouteName='auth'>        
+        <Drawer.Screen name="index" component={Index} options={{drawerLabel: 'Home',title: 'overview',}}/>
+        <Drawer.Screen name="auth" component={SignUp} />
+        <Drawer.Screen name="(helpSupport)" component={HelpScreen} options={{ title: 'Help and Support' }}/>
+        <Drawer.Screen name="(stack)" component={StackLayout} options={{headerShown:false, title:'ff'}}/>
+    </Drawer.Navigator> 
+  )
+}
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(weather)" options={{ headerShown: false }} />
-        <Stack.Screen name="(helpSupport)" options={{ headerShown: false }} />
-        <Stack.Screen name="(data_viz)" options={{ headerShown: false }} />
-        <Stack.Screen name="Livestock" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="(crops)"
-          options={{ title: 'Crops', headerShown: false }}
-        />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
-  );
+  return ( 
+    <DrawerNavigator />
+  )
 }

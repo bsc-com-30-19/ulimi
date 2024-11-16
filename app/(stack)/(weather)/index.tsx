@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, ActivityIndicator } from 'react-native';
 import WeatherListItem from '@/components/weather/WeatherListItem';
 import TodayItem from '@/components/weather/TodayItem';
-import { Image } from 'expo-image';
 
 const API_KEY = 'JVtwGAh2UCX1rI44XBWZiOu1mNmUvASM';
 
@@ -134,30 +133,6 @@ export default function WeatherScreen() {
             // date={formatDate(forecast.Date)} // Pass the formatted date
           />
         ))}
-        <View className="mt-[22px] mb-4">
-          <View className="flex flex-row items-end justify-between mx-4">
-            <View className="flex flex-row">
-              <View className="size-[42px] rounded-full p-[11px] bg-white flex">
-                <Image
-                  source={require('@/assets/icons/weather/Cloud.svg')}
-                  style={{ width: 20, height: 20 }}
-                />
-              </View>
-
-              <View className="ml-[13px]">
-                <Text className="text-[14px] font-medium">Tuesday</Text>
-                <Text className="text-[14px]">{'hhdhd'}</Text>
-              </View>
-            </View>
-
-            <View>
-              <Text className="text-[18px] font-medium">
-                {forecastData?.DailyForecasts[4].Temperature.Maximum.Value}
-                °C
-              </Text>
-            </View>
-          </View>
-        </View>
       </View>
     </View>
   );
