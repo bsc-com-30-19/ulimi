@@ -1,4 +1,6 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Link } from 'expo-router'; // Import Link from expo-router
 
 export default function AboutScreen() {
   return (
@@ -7,10 +9,26 @@ export default function AboutScreen() {
         <Text style={styles.topBarText}>Crops</Text>
       </View>
       <View style={styles.listContainer}>
-        <Text style={styles.listItem}>🌽 Maize</Text>
-        <Text style={styles.listItem}>🚬 Tobacco</Text>
-        <Text style={styles.listItem}>🥜 Ground Nuts</Text>
-        <Text style={styles.listItem}>🥥 Cassava</Text>
+        
+          <Link href={`/maize`} style={styles.link}>
+            🌽 Maize
+          </Link>
+       
+       
+          <Link href={`/tobacco`} style={styles.link}>
+            🚬 Tobacco
+          </Link>
+       
+        
+          <Link href={`/groundnuts`} style={styles.link}>
+            🥜 Ground Nuts
+          </Link>
+       
+        
+          <Link href={`/cassava`} style={styles.link}>
+            🥥 Cassava
+          </Link>
+       
       </View>
     </View>
   );
@@ -43,9 +61,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   listItem: {
-    color: 'black',
-    fontSize: 45,
     marginVertical: 30,
   },
+  link: {
+    color: 'black',
+    fontSize: 45,
+  },
 });
-
