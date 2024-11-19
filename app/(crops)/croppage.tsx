@@ -10,25 +10,25 @@ export default function AboutScreen() {
       </View>
       <View style={styles.listContainer}>
         
-          <Link href={`/maize`} style={styles.link}>
+          <Link href="/Maize" style={styles.link}>
             🌽 Maize
           </Link>
+      
        
-       
-          <Link href={`/tobacco`} style={styles.link}>
+          <Link href="/tobacco" style={styles.link}>
             🚬 Tobacco
           </Link>
        
-        
-          <Link href={`/groundnuts`} style={styles.link}>
+      
+          <Link href="/groundnuts" style={styles.link}>
             🥜 Ground Nuts
           </Link>
-       
-        
-          <Link href={`/cassava`} style={styles.link}>
+   
+      
+          <Link href="/cassava" style={styles.link}>
             🥥 Cassava
           </Link>
-       
+      
       </View>
     </View>
   );
@@ -57,11 +57,11 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     marginTop: 80, // Adjust based on the height of the top bar
-    marginLeft: 20, // Position the list a bit away from the left edge
+    marginLeft: 30, // Position the list a bit away from the left edge
     alignItems: 'flex-start',
   },
   listItem: {
-    marginVertical: 30,
+    marginBottom: 40,
   },
   link: {
     color: 'black',
