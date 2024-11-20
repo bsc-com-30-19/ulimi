@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, Button, TouchableOpacity, TextInput, FlatList, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, FlatList, StyleSheet, Button } from 'react-native';
 
 export default function Livestock() {
-  const [currentScreen, setCurrentScreen] = useState('Dashboard'); 
-  const [livestockData, setLivestockData] = useState([]); 
-  const [selectedLivestock, setSelectedLivestock] = useState(null); 
-  const [formData, setFormData] = useState({ breed: '', purchaseDate: '', livestockType: '', farmedArea: '', numberOfLivestock: '' }); // Form data for add/edit
-
+  const [currentScreen, setCurrentScreen] = useState('Dashboard');
+  const [livestockData, setLivestockData] = useState([]);
+  const [formData, setFormData] = useState({
+    breed: '',
+    purchaseDate: '',
+    livestockType: '',
+    farmedArea: '',
+    numberOfLiv2estock: '',
+  });
+  const [selectedLivestock, setSelectedLivestock] = useState(null);
 
   const handleBack = () => {
     setCurrentScreen('LivestockList');
@@ -51,14 +56,17 @@ export default function Livestock() {
                 setCurrentScreen('LivestockDetails');
               }}
             >
-              <Text>{item?.breed}</Text>
+              <Text>{item.breed}</Text>
             </TouchableOpacity>
           )}
         />
       ) : (
         <Text style={styles.emptyText}>No livestock added yet.</Text>
       )}
-      <TouchableOpacity style={styles.floatingButton} onPress={() => setCurrentScreen('AddLivestock')}>
+      <TouchableOpacity
+        style={styles.floatingButton}
+        onPress={() => setCurrentScreen('AddLivestock')}
+      >
         <Text style={styles.floatingButtonText}>+</Text>
       </TouchableOpacity>
     </View>
@@ -70,38 +78,69 @@ export default function Livestock() {
         <TouchableOpacity onPress={handleBack}>
           <Text style={styles.backArrow}>←</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Add Livestock</Text>
+        <Text style={styles.title}>Add Livestock</Text>
       </View>
-      <TextInput
-        placeholder="Breed"
-        style={styles.input}
-        value={formData.breed}
-        onChangeText={(text) => setFormData({ ...formData, breed: text })}
-      />
-      <TextInput
-        placeholder="Purchase Date"
-        style={styles.input}
-        value={formData.purchaseDate}
-        onChangeText={(text) => setFormData({ ...formData, purchaseDate: text })}
-      />
-      <TextInput
-        placeholder="Livestock Type"
-        style={styles.input}
-        value={formData.livestockType}
-        onChangeText={(text) => setFormData({ ...formData, livestockType: text })}
-      />
-      <TextInput
-        placeholder="Farmed Area"
-        style={styles.input}
-        value={formData.farmedArea}
-        onChangeText={(text) => setFormData({ ...formData, farmedArea: text })}
-      />
-      <TextInput
-        placeholder="Number of Livestock"
-        style={styles.input}
-        value={formData.numberOfLivestock}
-        onChangeText={(text) => setFormData({ ...formData, numberOfLivestock: text })}
-      />
+
+    
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Breed:</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.breed}
+          onChangeText={(text) => setFormData({ ...formData, breed: text })}
+        />
+      </View>
+
+  
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Purchase Date (YYYY-MM-DD):</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          maxLength={10} 
+          value={formData.purchaseDate}
+          onChangeText={(text) => {
+           
+            let formattedText = text.replace(/[^0-9-]/g, ''); 
+            if (formattedText.length === 5 || formattedText.length === 8) {
+              formattedText = `${formattedText}-`; 
+            }
+            setFormData({ ...formData, purchaseDate: formattedText });
+          }}
+        />
+      </View>
+
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Livestock Type:</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.livestockType}
+          onChangeText={(text) => setFormData({ ...formData, livestockType: text })}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Farmed Area:</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.farmedArea}
+          onChangeText={(text) => setFormData({ ...formData, farmedArea: text })}
+        />
+      </View>
+
+      
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Number of Livestock:</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={formData.numberOfLivestock}
+          onChangeText={(text) => setFormData({ ...formData, numberOfLivestock: text.replace(/[^0-9]/g, '') })}
+        />
+      </View>
+
+      
       <Button
         title="Add"
         onPress={() => {
@@ -122,7 +161,6 @@ export default function Livestock() {
         }}
         color="#4CAF50"
       />
-      <Button title="Cancel" onPress={() => setCurrentScreen('LivestockList')} color="#4CAF" />
     </View>
   );
 
@@ -132,7 +170,7 @@ export default function Livestock() {
         <TouchableOpacity onPress={handleBack}>
           <Text style={styles.backArrow}>←</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Livestock Details</Text>
+        <Text style={styles.title}>Livestock Details</Text>
       </View>
       <Text style={styles.label}>Breed: {selectedLivestock?.breed}</Text>
       <Text style={styles.label}>Purchase Date: {selectedLivestock?.purchaseDate}</Text>
@@ -145,8 +183,6 @@ export default function Livestock() {
           setFormData({ ...selectedLivestock });
           setCurrentScreen('EditLivestock');
         }}
-
-        //color="#4CAF50"
       >
         <Text style={styles.floatingButtonText}>Edit</Text>
       </TouchableOpacity>
@@ -159,58 +195,91 @@ export default function Livestock() {
         <TouchableOpacity onPress={handleBack}>
           <Text style={styles.backArrow}>←</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Edit Livestock</Text>
+        <Text style={styles.title}>Edit Livestock</Text>
       </View>
-      <TextInput
-        placeholder="Breed"
-        style={styles.input}
-        value={formData.breed}
-        onChangeText={(text) => setFormData({ ...formData, breed: text })}
-      />
-      <TextInput
-        placeholder="Purchase Date"
-        style={styles.input}
-        value={formData.purchaseDate}
-        onChangeText={(text) => setFormData({ ...formData, purchaseDate: text })}
-      />
-      <TextInput
-        placeholder="Livestock Type"
-        style={styles.input}
-        value={formData.livestockType}
-        onChangeText={(text) => setFormData({ ...formData, livestockType: text })}
-      />
-      <TextInput
-        placeholder="Farmed Area"
-        style={styles.input}
-        value={formData.farmedArea}
-        onChangeText={(text) => setFormData({ ...formData, farmedArea: text })}
-      />
-      <TextInput
-        placeholder="Number of Livestock"
-        style={styles.input}
-        value={formData.numberOfLivestock}
-        onChangeText={(text) => setFormData({ ...formData, numberOfLivestock: text })}
-      />
-      <Button
-        title="Save Changes"
+
+      
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Breed:</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.breed}
+          onChangeText={(text) => setFormData({ ...formData, breed: text })}
+        />
+      </View>
+
+      
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Purchase Date (YYYY-MM-DD):</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          maxLength={10}
+          value={formData.purchaseDate}
+          onChangeText={(text) => {
+           
+            let formattedText = text.replace(/[^0-9-]/g, ''); 
+            if (formattedText.length === 5 || formattedText.length === 8) {
+              formattedText = `${formattedText}-`; 
+            }
+            setFormData({ ...formData, purchaseDate: formattedText });
+          }}
+        />
+      </View>
+
+      
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Livestock Type:</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.livestockType}
+          onChangeText={(text) => setFormData({ ...formData, livestockType: text })}
+        />
+      </View>
+
+      
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Farmed Area:</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.farmedArea}
+          onChangeText={(text) => setFormData({ ...formData, farmedArea: text })}
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Number of Livestock:</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={formData.numberOfLivestock}
+          onChangeText={(text) => setFormData({ ...formData, numberOfLivestock: text.replace(/[^0-9]/g, '') })}
+        />
+      </View>
+
+      <TouchableOpacity
+        style={styles.saveButton}
         onPress={() => {
-          if (formData.breed.trim() && formData.purchaseDate.trim() && formData.livestockType.trim() && formData.farmedArea.trim() && formData.numberOfLivestock.trim()) {
-            setLivestockData(
-              livestockData.map((item) => (item.id === selectedLivestock.id ? { ...item, ...formData } : item))
-            );
-            setCurrentScreen('LivestockList');
-          } else {
-            alert('Please fill in all fields');
-          }
+          const updatedData = livestockData.map((item) =>
+            item.id === selectedLivestock.id ? { ...item, ...formData } : item
+          );
+          setLivestockData(updatedData);
+          setCurrentScreen('LivestockList');
         }}
-        color="#4CAF50"
-      />
-      <Button title="Cancel" onPress={() => setCurrentScreen('LivestockList')} />
+      >
+        <Text style={styles.buttonText}>Save Changes</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.cancelButton}
+        onPress={() => setCurrentScreen('LivestockList')}
+      >
+        <Text style={styles.buttonText}>Cancel</Text>
+      </TouchableOpacity>
     </View>
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       {currentScreen === 'Dashboard' && renderDashboard()}
       {currentScreen === 'LivestockList' && renderLivestockList()}
       {currentScreen === 'AddLivestock' && renderAddLivestock()}
@@ -221,10 +290,61 @@ export default function Livestock() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
-  dashboardContainer: { flex: 1, backgroundColor: '#F9FFF4', padding: 16 },
-  backButton: { marginBottom: 10 },
-  backArrow: { fontSize: 24, color: '#4CAF50' },
+  container: { flex: 1, padding: 16 },
+  header: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
+  backArrow: { fontSize: 24 },
+  title: { fontSize: 20, fontWeight: 'bold', flex: 1, textAlign: 'center' },
+  inputContainer: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
+  inputLabel: { fontSize: 16, marginRight: 8, flex: 1 },
+  input: {
+    height: 50,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 10,
+    flex: 2,
+    paddingLeft: 10,
+  },
+  floatingButton: {
+    position: 'absolute',
+    right: 16,
+    bottom: 16,
+    backgroundColor: '#4CAF50',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  floatingButtonText: { color: 'white', fontSize: 30 },
+  saveButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#4CAF50',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  cancelButton: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    backgroundColor: '#f44336',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  emptyText: { textAlign: 'center', fontSize: 18, marginTop: 20 },
+  listItem: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
   dashboardContent: {
     flex: 1,
     flexDirection: 'row',
@@ -242,24 +362,4 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   cardText: { fontSize: 18, color: '#3E3E3E', fontWeight: 'bold' },
-  header: { flexDirection: 'row', alignItems: 'center', marginBottom: 16 },
-  title: { fontSize: 20, fontWeight: 'bold', marginLeft: 16 },
-  emptyText: { textAlign: 'center', marginVertical: 16, fontSize: 16, color: '#888' },
-  listItem: { padding: 16, backgroundColor: '#E8F5E9', marginBottom: 8, borderRadius: 8 },
-  addButton: {
-    backgroundColor: '#4CAF50',
-    padding: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 16,
-  },
-  addButtonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16,
-  },
-  label: { fontSize: 16, marginBottom: 8 },
 });
