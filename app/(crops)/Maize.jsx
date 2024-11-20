@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50, // Increased height
-    borderColor: 'green',
+    borderColor: 'white',
     borderWidth: 2,
     borderRadius: 10,
     marginBottom: 20,
