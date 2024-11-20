@@ -26,14 +26,16 @@ const App = () => {
               <View style={styles.modalView}>
                 <Text style={styles.modalText}>Enter Crop Details</Text>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input, styles.inputText]}
                   placeholder="Description"
+                  placeholderTextColor="white" // Set placeholder text color to white
                   value={description}
                   onChangeText={setDescription}
                 />
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input, styles.inputText]}
                   placeholder="Amount"
+                  placeholderTextColor="white" // Set placeholder text color to white
                   value={amount}
                   onChangeText={setAmount}
                   keyboardType="numeric"
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 40,
-    backgroundColor: 'grey', // Changed background color to grey
+    backgroundColor: 'green', // Changed background color to green
     borderRadius: 20,
     padding: 50, // Increased padding
     alignItems: 'center',
@@ -119,6 +121,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalText: {
+    color: 'white',
     marginBottom: 15,
     textAlign: 'center',
     fontSize: 24, // Increased font size
@@ -132,9 +135,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 20,
     width: 400, // Increased width
+    color: 'white', // Set text color to white
   },
   inputText: {
-    fontSize: 30,
+    fontSize: 20,
   },
 });
 
