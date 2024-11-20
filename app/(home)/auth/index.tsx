@@ -39,7 +39,7 @@ const SignUp = () => {
       <CustomInput textInputStyle='bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-14' name="rpassword" placeholder="Please re-enter password" control={control} secureTextEntry/>
       
       <Button
-        title="Learn More"
+        title="Sign Up"
         color="#37520B"
         accessibilityLabel="Sign Up"
       />
