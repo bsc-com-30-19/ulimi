@@ -15,7 +15,7 @@ export default function AboutScreen() {
           </Link>
       
        
-          <Link href="/tobacco" style={styles.link}>
+          <Link href="/Tobacco" style={styles.link}>
             🚬 Tobacco
           </Link>
        
