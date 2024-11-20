@@ -58,8 +58,8 @@ export default function Livestock() {
       ) : (
         <Text style={styles.emptyText}>No livestock added yet.</Text>
       )}
-      <TouchableOpacity style={styles.addButton} onPress={() => setCurrentScreen('AddLivestock')}>
-        <Text style={styles.addButtonText}>+ Add Livestock</Text>
+      <TouchableOpacity style={styles.floatingButton} onPress={() => setCurrentScreen('AddLivestock')}>
+        <Text style={styles.floatingButtonText}>+</Text>
       </TouchableOpacity>
     </View>
   );
@@ -139,14 +139,17 @@ export default function Livestock() {
       <Text style={styles.label}>Livestock Type: {selectedLivestock?.livestockType}</Text>
       <Text style={styles.label}>Farmed Area: {selectedLivestock?.farmedArea}</Text>
       <Text style={styles.label}>Number of Livestock: {selectedLivestock?.numberOfLivestock}</Text>
-      <Button
-        title="Edit"
+      <TouchableOpacity
+        style={styles.floatingButton}
         onPress={() => {
           setFormData({ ...selectedLivestock });
           setCurrentScreen('EditLivestock');
         }}
-        color="#4CAF50"
-      />
+
+        //color="#4CAF50"
+      >
+        <Text style={styles.floatingButtonText}>Edit</Text>
+      </TouchableOpacity>
     </View>
   );
 
