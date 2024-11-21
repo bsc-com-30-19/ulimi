@@ -33,8 +33,8 @@ const LogIn = () => {
       <Text className="font-semibold text-base mb-2">Password</Text>
       <CustomInput
         textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
-        name="email"
-        placeholder="Isaac@com311.com"
+        name="password"
+        placeholder="Enter your accounts password"
         control={control}
         secureTextEntry
       />
