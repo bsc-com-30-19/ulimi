@@ -245,9 +245,9 @@ export default function LivestockPage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#fff' },
-  header: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
+  header: { flexDirection: 'row', alignItems: 'center', marginBottom: 20, backgroundColor: '#4CAF50'},
   backArrow: { fontSize: 24, marginRight: 10 },
-  title: { fontSize: 24, fontWeight: 'bold' },
+  title: { fontSize: 24, fontWeight: 'bold', color: '#fff' },
   listItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc' },
   floatingButton: {
     position: 'absolute',
@@ -275,4 +275,3 @@ const styles = StyleSheet.create({
   label: { fontSize: 16, marginVertical: 5 },
   emptyText: { fontSize: 16, color: '#888' },
 });
-
