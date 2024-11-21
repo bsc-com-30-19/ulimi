@@ -261,8 +261,8 @@ const styles = StyleSheet.create({
     zIndex: 1, 
   },
   floatingButtonText: { fontSize: 24, color: '#fff', fontWeight: 'bold' },
-  inputContainer: { marginBottom: 15 },
-  inputLabel: { fontSize: 16, marginBottom: 5 },
+  //inputContainer: { marginBottom: 20},
+  inputLabel: { fontSize: 16, marginBottom: 0},
   input: { borderWidth: 1, borderColor: '#ccc', padding: 10, fontSize: 16 },
   button: {
     backgroundColor: '#4CAF50', 
