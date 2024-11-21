@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
+  Button,
   FlatList,
   TouchableOpacity,
   StyleSheet,
@@ -28,6 +29,7 @@ export default function CropsList() {
 
   return (
     <View style={styles.container}>
+      <Button title="Add" onPress={() => router.push(`/test_backend/add/`)} />
       <FlatList
         data={crops}
         keyExtractor={(item) => item.id.toString()}
