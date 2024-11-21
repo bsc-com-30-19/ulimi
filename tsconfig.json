@@ -18,5 +18,5 @@
     "app/_layout.jsx",
     "app/crops/farmmanagement.tsx",
     "nativewind-env.d.ts"
-, "app/(helpSupport)/_layout.jsx"  ]
+, "app/(home)/(helpSupport)/_layout.jsx"  ]
 }

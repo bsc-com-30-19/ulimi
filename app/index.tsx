@@ -1,33 +1,11 @@
-import { useRouter } from 'expo-router';
-import { ScrollView,FlatList, Text, View } from 'react-native';
-import "../global.css"
-import MenuBlock from '@/components/menus/MenuBlock';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { Redirect } from 'expo-router'
 
-const MenuList=[
-  {Mname:'Crops', linkname:'/(stack)/(crops)'},
-  {Mname:'Data Visualisation', linkname:'/(stack)/(data_viz)'},
-  {Mname:'Weather', linkname:'/(stack)/(weather)'},
-  {Mname:'Livestock', linkname:'/(stack)/(livestock)'},
-]
-
-export default function Index() {
-  const router = useRouter();
-
-  const handlePress = ({link}:{link:any}) =>{
-    router.replace(link)
-  }
-  
+const Index = () => {
   return (
-      
-      <ScrollView className='flex flex-row flex-wrap mx-auto' showsVerticalScrollIndicator={false}>
-          <FlatList
-            data={MenuList}
-            renderItem={({item})=>(
-              <MenuBlock name={item.Mname} link={item.linkname} OnPress={() => handlePress(item.linkname)}/>
-            )}
-            numColumns={2}
-          />
-      </ScrollView>
-    
-  );
+    <Redirect href="/(home)"/>
+  )
 }
+
+export default Index
