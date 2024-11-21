@@ -46,7 +46,7 @@ const LogIn = () => {
         accessibilityLabel="Log In"
       />
 
-      <Link href={'/auth'} className='mt-6 mb'>
+      <Link href={'/signup'} className='mt-6 mb'>
         <Text>Don't have an account? Click to Sign Up</Text>
       </Link>
     </View>
