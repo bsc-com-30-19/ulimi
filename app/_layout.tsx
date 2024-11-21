@@ -8,7 +8,7 @@ const StackExpo = () =>{
     <Stack >
       <Stack.Screen name="Index" options={{headerShown:false}}/>
       <Stack.Screen name="(home)" options={{headerShown:false}}/>
-      <Stack.Screen name="(crops)" options={{headerShown:false}}/>
+      <Stack.Screen name="(crops)" />
       <Stack.Screen name="(weather)" />
       <Stack.Screen name="(livestock)" />
       <Stack.Screen name="(data_viz)" />
