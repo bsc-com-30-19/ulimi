@@ -14,6 +14,25 @@ const App = () => {
           <Text style={styles.tabText}>MAIZE</Text>
         </View>
         <View style={styles.content}>
+          <Text style={styles.sectionTitle}>GENERAL DETAILS</Text>
+          <View style={styles.details}>
+            <Text style={styles.detailText}>- Planting Dates: 11 November, 2024</Text>
+            <Text style={styles.detailText}>- Soil pH Requirement: 5.8-7.0</Text>
+            <Text style={styles.detailText}>- Growth Duration: 90 - 120 days</Text>
+            <Text style={styles.detailText}>- Planted: 1 hectare</Text>
+            <Text style={styles.detailText}>- Expected Yield: 4 tons</Text>
+          </View>
+
+          <Text style={styles.sectionTitle}>TREATMENT SCHEDULES</Text>
+          <View style={styles.details}>
+            <Text style={styles.detailText}>- Fertilization: 25 November 2024</Text>
+            <Text style={styles.detailText}>- Herbicide Application: 20 December 2024</Text>
+            <Text style={styles.detailText}>- Insecticide for Pests: 10 January 2025</Text>
+            <Text style={styles.detailText}>- Harvest Prep Treatment: 1 March, 2025</Text>
+          </View>
+        </View>
+
+        <View style={styles.modalContent}>
           <Modal
             animationType="slide"
             transparent={true}
@@ -81,6 +100,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 50, // Ensure the content doesn't overlap with the top tab
+  },
+  sectionTitle: {
+    fontSize: 24, // Increased font size
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
+    color: 'black',
+  },
+  details: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  detailText: {
+    fontSize: 22, // Increased font size
+    color: 'black',
+    textAlign: 'center',
+  },
+  modalContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   centeredView: {
     flex: 1,
