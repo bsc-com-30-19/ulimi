@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50, // Ensure the content doesn't overlap with the top tab
+    marginTop: 100, // Ensure the content doesn't overlap with the top tab
   },
   sectionTitle: {
     fontSize: 24, // Increased font size
