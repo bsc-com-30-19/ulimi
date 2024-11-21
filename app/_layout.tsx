@@ -10,7 +10,7 @@ import { NavigationContainer } from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '@/app-throwaway/(tabs)/FarmManagement';
 import StackLayout from './(stack)/_layout';
-import Livestock from './Livestock/_layout';
+import Livestock from './(Livestock)/_layout';
 
 const Drawer = createDrawerNavigator();
 // const Stack = createNativeStackNavigator();

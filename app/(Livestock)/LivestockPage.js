@@ -1,45 +1,23 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput, FlatList, StyleSheet, Button } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, FlatList, Button, StyleSheet, ScrollView } from 'react-native';
 
-export default function Livestock() {
-  const [currentScreen, setCurrentScreen] = useState('Dashboard');
+export default function LivestockPage({ navigation }) {
   const [livestockData, setLivestockData] = useState([]);
   const [formData, setFormData] = useState({
     breed: '',
     purchaseDate: '',
     livestockType: '',
     farmedArea: '',
-    numberOfLiv2estock: '',
+    numberOfLivestock: '',
   });
   const [selectedLivestock, setSelectedLivestock] = useState(null);
+  const [viewMode, setViewMode] = useState('list'); 
 
-  const handleBack = () => {
-    setCurrentScreen('LivestockList');
-  };
-
-  const renderDashboard = () => (
-    <View style={styles.dashboardContainer}>
-      <TouchableOpacity style={styles.backButton}>
-        <Text style={styles.backArrow}>←</Text>
-      </TouchableOpacity>
-      <View style={styles.dashboardContent}>
-        <TouchableOpacity style={styles.dashboardCard} onPress={() => setCurrentScreen('LivestockList')}>
-          <Text style={styles.cardText}>Animals</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.dashboardCard} onPress={() => setCurrentScreen('ProduceList')}>
-          <Text style={styles.cardText}>Produce</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.dashboardCard} onPress={() => setCurrentScreen('TasksList')}>
-          <Text style={styles.cardText}>Tasks</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-
+ 
   const renderLivestockList = () => (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleBack}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.backArrow}>←</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Livestock List</Text>
@@ -53,7 +31,7 @@ export default function Livestock() {
               style={styles.listItem}
               onPress={() => {
                 setSelectedLivestock(item);
-                setCurrentScreen('LivestockDetails');
+                setViewMode('details');
               }}
             >
               <Text>{item.breed}</Text>
@@ -63,25 +41,25 @@ export default function Livestock() {
       ) : (
         <Text style={styles.emptyText}>No livestock added yet.</Text>
       )}
+      
       <TouchableOpacity
         style={styles.floatingButton}
-        onPress={() => setCurrentScreen('AddLivestock')}
+        onPress={() => setViewMode('add')}
       >
         <Text style={styles.floatingButtonText}>+</Text>
       </TouchableOpacity>
     </View>
   );
 
+
   const renderAddLivestock = () => (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleBack}>
+        <TouchableOpacity onPress={() => setViewMode('list')}>
           <Text style={styles.backArrow}>←</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Add Livestock</Text>
       </View>
-
-    
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Breed:</Text>
         <TextInput
@@ -90,27 +68,17 @@ export default function Livestock() {
           onChangeText={(text) => setFormData({ ...formData, breed: text })}
         />
       </View>
-
-  
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Purchase Date (YYYY-MM-DD):</Text>
         <TextInput
           style={styles.input}
           keyboardType="numeric"
-          maxLength={10} 
           value={formData.purchaseDate}
-          onChangeText={(text) => {
-           
-            let formattedText = text.replace(/[^0-9-]/g, ''); 
-            if (formattedText.length === 5 || formattedText.length === 8) {
-              formattedText = `${formattedText}-`; 
-            }
-            setFormData({ ...formData, purchaseDate: formattedText });
-          }}
+          onChangeText={(text) =>
+            setFormData({ ...formData, purchaseDate: text.replace(/[^0-9-]/g, '') })
+          }
         />
       </View>
-
-
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Livestock Type:</Text>
         <TextInput
@@ -119,7 +87,6 @@ export default function Livestock() {
           onChangeText={(text) => setFormData({ ...formData, livestockType: text })}
         />
       </View>
-
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Farmed Area:</Text>
         <TextInput
@@ -128,46 +95,50 @@ export default function Livestock() {
           onChangeText={(text) => setFormData({ ...formData, farmedArea: text })}
         />
       </View>
-
-      
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Number of Livestock:</Text>
         <TextInput
           style={styles.input}
           keyboardType="numeric"
           value={formData.numberOfLivestock}
-          onChangeText={(text) => setFormData({ ...formData, numberOfLivestock: text.replace(/[^0-9]/g, '') })}
+          onChangeText={(text) =>
+            setFormData({ ...formData, numberOfLivestock: text.replace(/[^0-9]/g, '') })
+          }
         />
       </View>
-
-      
-      <Button
-        title="Add"
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => {
           if (
-            formData.breed.trim() &&
-            formData.purchaseDate.trim() &&
-            formData.livestockType.trim() &&
-            formData.farmedArea.trim() &&
-            formData.numberOfLivestock.trim()
+            formData.breed &&
+            formData.purchaseDate &&
+            formData.livestockType &&
+            formData.farmedArea &&
+            formData.numberOfLivestock
           ) {
             const newItem = { id: Date.now(), ...formData };
             setLivestockData([...livestockData, newItem]);
-            setFormData({ breed: '', purchaseDate: '', livestockType: '', farmedArea: '', numberOfLivestock: '' });
-            setCurrentScreen('LivestockList');
-          } else {
-            alert('Please fill in all fields');
+            setFormData({
+              breed: '',
+              purchaseDate: '',
+              livestockType: '',
+              farmedArea: '',
+              numberOfLivestock: '',
+            });
+            setViewMode('list');
           }
         }}
-        color="#4CAF50"
-      />
+      >
+        <Text style={styles.buttonText}>Add Livestock</Text>
+      </TouchableOpacity>
     </View>
   );
+
 
   const renderLivestockDetails = () => (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleBack}>
+        <TouchableOpacity onPress={() => setViewMode('list')}>
           <Text style={styles.backArrow}>←</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Livestock Details</Text>
@@ -176,29 +147,27 @@ export default function Livestock() {
       <Text style={styles.label}>Purchase Date: {selectedLivestock?.purchaseDate}</Text>
       <Text style={styles.label}>Livestock Type: {selectedLivestock?.livestockType}</Text>
       <Text style={styles.label}>Farmed Area: {selectedLivestock?.farmedArea}</Text>
-      <Text style={styles.label}>Number of Livestock: {selectedLivestock?.numberOfLivestock}</Text>
+      <Text style={styles.label}>
+        Number of Livestock: {selectedLivestock?.numberOfLivestock}
+      </Text>
       <TouchableOpacity
-        style={styles.floatingButton}
-        onPress={() => {
-          setFormData({ ...selectedLivestock });
-          setCurrentScreen('EditLivestock');
-        }}
+        style={styles.button}
+        onPress={() => setViewMode('edit')}
       >
-        <Text style={styles.floatingButtonText}>Edit</Text>
+        <Text style={styles.buttonText}>Edit</Text>
       </TouchableOpacity>
     </View>
   );
 
+
   const renderEditLivestock = () => (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleBack}>
+        <TouchableOpacity onPress={() => setViewMode('list')}>
           <Text style={styles.backArrow}>←</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Edit Livestock</Text>
       </View>
-
-      
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Breed:</Text>
         <TextInput
@@ -207,27 +176,17 @@ export default function Livestock() {
           onChangeText={(text) => setFormData({ ...formData, breed: text })}
         />
       </View>
-
-      
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Purchase Date (YYYY-MM-DD):</Text>
         <TextInput
           style={styles.input}
           keyboardType="numeric"
-          maxLength={10}
           value={formData.purchaseDate}
-          onChangeText={(text) => {
-           
-            let formattedText = text.replace(/[^0-9-]/g, ''); 
-            if (formattedText.length === 5 || formattedText.length === 8) {
-              formattedText = `${formattedText}-`; 
-            }
-            setFormData({ ...formData, purchaseDate: formattedText });
-          }}
+          onChangeText={(text) =>
+            setFormData({ ...formData, purchaseDate: text.replace(/[^0-9-]/g, '') })
+          }
         />
       </View>
-
-      
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Livestock Type:</Text>
         <TextInput
@@ -236,8 +195,6 @@ export default function Livestock() {
           onChangeText={(text) => setFormData({ ...formData, livestockType: text })}
         />
       </View>
-
-      
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Farmed Area:</Text>
         <TextInput
@@ -246,120 +203,76 @@ export default function Livestock() {
           onChangeText={(text) => setFormData({ ...formData, farmedArea: text })}
         />
       </View>
-
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Number of Livestock:</Text>
         <TextInput
           style={styles.input}
           keyboardType="numeric"
           value={formData.numberOfLivestock}
-          onChangeText={(text) => setFormData({ ...formData, numberOfLivestock: text.replace(/[^0-9]/g, '') })}
+          onChangeText={(text) =>
+            setFormData({ ...formData, numberOfLivestock: text.replace(/[^0-9]/g, '') })
+          }
         />
       </View>
-
       <TouchableOpacity
-        style={styles.saveButton}
+        style={styles.button}
         onPress={() => {
           const updatedData = livestockData.map((item) =>
             item.id === selectedLivestock.id ? { ...item, ...formData } : item
           );
           setLivestockData(updatedData);
-          setCurrentScreen('LivestockList');
+          setViewMode('list');
         }}
       >
         <Text style={styles.buttonText}>Save Changes</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.cancelButton}
-        onPress={() => setCurrentScreen('LivestockList')}
-      >
-        <Text style={styles.buttonText}>Cancel</Text>
-      </TouchableOpacity>
     </View>
   );
 
-  return (
-    <View style={styles.container}>
-      {currentScreen === 'Dashboard' && renderDashboard()}
-      {currentScreen === 'LivestockList' && renderLivestockList()}
-      {currentScreen === 'AddLivestock' && renderAddLivestock()}
-      {currentScreen === 'LivestockDetails' && renderLivestockDetails()}
-      {currentScreen === 'EditLivestock' && renderEditLivestock()}
-    </View>
-  );
+  switch (viewMode) {
+    case 'list':
+      return renderLivestockList();
+    case 'add':
+      return renderAddLivestock();
+    case 'details':
+      return renderLivestockDetails();
+    case 'edit':
+      return renderEditLivestock();
+    default:
+      return renderLivestockList();
+  }
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
+  container: { flex: 1, padding: 20, backgroundColor: '#fff' },
   header: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
-  backArrow: { fontSize: 24 },
-  title: { fontSize: 20, fontWeight: 'bold', flex: 1, textAlign: 'center' },
-  inputContainer: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
-  inputLabel: { fontSize: 16, marginRight: 8, flex: 1 },
-  input: {
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 10,
-    flex: 2,
-    paddingLeft: 10,
-  },
+  backArrow: { fontSize: 24, marginRight: 10 },
+  title: { fontSize: 24, fontWeight: 'bold' },
+  listItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc' },
   floatingButton: {
     position: 'absolute',
-    right: 16,
-    bottom: 16,
-    backgroundColor: '#4CAF50',
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  floatingButtonText: { color: 'white', fontSize: 30 },
-  saveButton: {
-    position: 'absolute',
-    bottom: 20,
     right: 20,
-    backgroundColor: '#4CAF50',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-  },
-  cancelButton: {
-    position: 'absolute',
     bottom: 20,
-    left: 20,
-    backgroundColor: '#f44336',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  emptyText: { textAlign: 'center', fontSize: 18, marginTop: 20 },
-  listItem: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  dashboardContent: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingTop: 10,
-  },
-  dashboardCard: {
-    width: '45%',
-    height: 120,
-    backgroundColor: '#A3C586',
+    backgroundColor: '#4CAF50', 
+    borderRadius: 50,
+    padding: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
-    marginVertical: 10,
+    zIndex: 1, 
   },
-  cardText: { fontSize: 18, color: '#3E3E3E', fontWeight: 'bold' },
+  floatingButtonText: { fontSize: 24, color: '#fff', fontWeight: 'bold' },
+  inputContainer: { marginBottom: 15 },
+  inputLabel: { fontSize: 16, marginBottom: 5 },
+  input: { borderWidth: 1, borderColor: '#ccc', padding: 10, fontSize: 16 },
+  button: {
+    backgroundColor: '#4CAF50', 
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  label: { fontSize: 16, marginVertical: 5 },
+  emptyText: { fontSize: 16, color: '#888' },
 });
+
