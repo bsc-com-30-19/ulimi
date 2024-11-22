@@ -1,20 +1,97 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+} from "react-native";
+
+const ProduceItem = ({ item, onEdit, onDelete }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [newName, setNewName] = useState(item.name);
+  const [newQuantity, setNewQuantity] = useState(item.quantity.toString());
+
+  return (
+    <View style={styles.produceItem}>
+      {isEditing ? (
+        <>
+          <TextInput
+            style={styles.textInput}
+            value={newName}
+            onChangeText={setNewName}
+            placeholder="Produce Name"
+          />
+          <TextInput
+            style={[styles.textInput, styles.quantityInput]}
+            value={newQuantity}
+            onChangeText={setNewQuantity}
+            keyboardType="numeric"
+            placeholder="Quantity"
+          />
+          <TouchableOpacity
+            style={styles.saveButton}
+            onPress={() => {
+              onEdit(item.id, newName, parseInt(newQuantity, 10) || 0);
+              setIsEditing(false);
+            }}
+          >
+            <Text style={styles.saveButtonText}>Save</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <>
+          <View>
+            <Text style={styles.produceText}>
+              {item.name} - {item.quantity}
+            </Text>
+          </View>
+          <View style={styles.actions}>
+            <TouchableOpacity
+              style={styles.editButton}
+              onPress={() => setIsEditing(true)}
+            >
+              <Text style={styles.actionText}>Edit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.deleteButton}
+              onPress={() => onDelete(item.id)}
+            >
+              <Text style={styles.actionText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
+    </View>
+  );
+};
 
 export default function ProducePage() {
   const [produceInput, setProduceInput] = useState("");
+  const [quantityInput, setQuantityInput] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [produceList, setProduceList] = useState([]);
 
   const addProduce = () => {
-    if (produceInput.trim() !== "") {
-      setProduceList([...produceList, { id: Date.now().toString(), name: produceInput }]);
+    if (produceInput.trim() !== "" && quantityInput.trim() !== "") {
+      setProduceList([
+        ...produceList,
+        {
+          id: Date.now().toString(),
+          name: produceInput,
+          quantity: parseInt(quantityInput, 10) || 0,
+        },
+      ]);
       setProduceInput("");
+      setQuantityInput("");
     }
   };
-  const editProduce = (id, newName) => {
+
+  const editProduce = (id, newName, newQuantity) => {
     setProduceList(
       produceList.map((item) =>
-        item.id === id ? { ...item, name: newName } : item
+        item.id === id ? { ...item, name: newName, quantity: newQuantity } : item
       )
     );
   };
@@ -23,72 +100,51 @@ export default function ProducePage() {
     setProduceList(produceList.filter((item) => item.id !== id));
   };
 
-  const renderItem = ({ item }) => {
-    const [isEditing, setIsEditing] = useState(false);
-    const [newName, setNewName] = useState(item.name);
-
-    return (
-      <View style={styles.produceItem}>
-        {isEditing ? (
-          <>
-            <TextInput
-              style={styles.textInput}
-              value={newName}
-              onChangeText={setNewName}
-            />
-            <TouchableOpacity
-              style={styles.saveButton}
-              onPress={() => {
-                editProduce(item.id, newName);
-                setIsEditing(false);
-              }}
-            >
-              <Text style={styles.saveButtonText}>Save</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <>
-            <Text style={styles.produceText}>{item.name}</Text>
-            <View style={styles.actions}>
-              <TouchableOpacity
-                style={styles.editButton}
-                onPress={() => setIsEditing(true)}
-              >
-                <Text style={styles.actionText}>Edit</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.deleteButton}
-                onPress={() => deleteProduce(item.id)}
-              >
-                <Text style={styles.actionText}>Delete</Text>
-              </TouchableOpacity>
-            </View>
-          </>
-        )}
-      </View>
-    );
-  };
+  const filteredProduceList = produceList.filter((item) =>
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <View style={styles.container}>
+      <Text style={styles.header}>Manage Produce</Text>
+      <TextInput
+        style={[styles.textInput, styles.searchBar]}
+        placeholder="Search Produce"
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.textInput}
-          placeholder="Add Produce"
+          placeholder="Produce Name"
           value={produceInput}
           onChangeText={setProduceInput}
+        />
+        <TextInput
+          style={[styles.textInput, styles.quantityInput]}
+          placeholder="Quantity"
+          value={quantityInput}
+          onChangeText={setQuantityInput}
+          keyboardType="numeric"
         />
         <TouchableOpacity style={styles.addButton} onPress={addProduce}>
           <Text style={styles.addButtonText}>+</Text>
         </TouchableOpacity>
       </View>
       <FlatList
-        data={produceList}
+        data={filteredProduceList}
         keyExtractor={(item) => item.id}
-        renderItem={renderItem}
+        renderItem={({ item }) => (
+          <ProduceItem
+            item={item}
+            onEdit={editProduce}
+            onDelete={deleteProduce}
+          />
+        )}
         ListEmptyComponent={
-          <Text style={styles.emptyText}>No produce added yet.</Text>
+          <Text style={styles.emptyText}>No produce found.</Text>
         }
+        onEndReachedThreshold={0.5}
       />
     </View>
   );
@@ -99,6 +155,21 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: "#F5F5F5",
+  },
+  header: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  searchBar: {
+    marginBottom: 80,
+    backgroundColor: "#FFF",
+    paddingLeft: 90,
+    paddingRight: 90,
+    fontSize: 16,
+    height:4, 
+    borderRadius: 180,
+    
   },
   inputContainer: {
     flexDirection: "row",
@@ -111,6 +182,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 8,
     backgroundColor: "#fff",
+  },
+  quantityInput: {
+    marginLeft: 8,
+    maxWidth: 80,
   },
   addButton: {
     marginLeft: 8,
@@ -139,13 +214,27 @@ const styles = StyleSheet.create({
   },
   actions: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    width: 120,
   },
   editButton: {
-    marginRight: 8,
+    backgroundColor: "#FFEB3B",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 4,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  deleteButton: {},
+  deleteButton: {
+    backgroundColor: "#F44336",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 4,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   actionText: {
-    color: "#Ff0000",
+    color: "#FFF",
     fontWeight: "bold",
   },
   saveButton: {
@@ -164,4 +253,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontStyle: "italic",
   },
+  header: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 16,
+    backgroundColor:'#66BB6A'},
 });

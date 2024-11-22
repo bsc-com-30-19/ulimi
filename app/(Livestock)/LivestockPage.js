@@ -17,9 +17,9 @@ export default function LivestockPage({ navigation }) {
   const renderLivestockList = () => (
     <View style={styles.container}>
       <View style={styles.header}>
-      <TouchableOpacity onPress={() => setViewMode('list')}>
+      {/*<TouchableOpacity onPress={() => setViewMode('list')}>
           <Text style={styles.backArrow}>←</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
         <Text style={styles.title}>Livestock List</Text>
       </View>
       {livestockData.length > 0 ? (

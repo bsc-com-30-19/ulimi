@@ -1,71 +1,127 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  Alert,
+  StyleSheet,
+} from "react-native";
+
+const TaskItem = ({ task, onComplete, onDelete }) => {
+  return (
+    <View style={styles.taskItem}>
+      <Text style={[styles.taskText, task.completed && styles.completedText]}>
+        {task.name}
+      </Text>
+      <View style={styles.actions}>
+        {!task.completed && (
+          <TouchableOpacity
+            style={styles.completeButton}
+            onPress={() => onComplete(task.id)}
+          >
+            <Text style={styles.actionText}>Complete</Text>
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={() => onDelete(task.id)}
+        >
+          <Text style={styles.actionText}>Delete</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 export default function TaskPage() {
-  const [taskInput, setTaskInput] = useState('');
-  const [tasks, setTasks] = useState([]); 
-  const [completedTasks, setCompletedTasks] = useState([]);
+  const [taskInput, setTaskInput] = useState("");
+  const [taskList, setTaskList] = useState([]); // Initially, no tasks are added
 
   const addTask = () => {
-    if (taskInput.trim() !== '') {
-      setTasks([...tasks, taskInput]);
-      setTaskInput('');
+    if (taskInput.trim() !== "") {
+      setTaskList([
+        ...taskList,
+        {
+          id: Date.now().toString(), // Unique ID based on current timestamp
+          name: taskInput,
+          completed: false,
+        },
+      ]);
+      setTaskInput(""); // Clear input after task is added
     }
   };
 
-  const completeTask = (taskIndex) => {
-    const taskToComplete = tasks[taskIndex];
-    setTasks(tasks.filter((_, index) => index !== taskIndex));
-    setCompletedTasks([...completedTasks, taskToComplete]);
+  const completeTask = (id) => {
+    setTaskList(
+      taskList.map((task) =>
+        task.id === id ? { ...task, completed: true } : task
+      )
+    );
   };
 
-  const deleteTask = (taskIndex) => {
-    setCompletedTasks(completedTasks.filter((_, index) => index !== taskIndex));
+  const deleteTask = (id) => {
+    Alert.alert("Delete Task", "Are you sure you want to delete this task?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        onPress: () => {
+          setTaskList((prevList) => prevList.filter((task) => task.id !== id)); // Remove task by ID
+        },
+      },
+    ]);
   };
+
+  const uncompletedTasks = taskList.filter((task) => !task.completed);
+  const completedTasks = taskList.filter((task) => task.completed);
 
   return (
     <View style={styles.container}>
-      
-      
+      <Text style={styles.header}>Manage Tasks</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.textInput}
-          placeholder="Enter a task"
+          placeholder="Task Name"
           value={taskInput}
           onChangeText={setTaskInput}
         />
         <TouchableOpacity style={styles.addButton} onPress={addTask}>
-          <Text style={styles.addButtonText}>Add</Text>
+          <Text style={styles.addButtonText}>+</Text>
         </TouchableOpacity>
       </View>
 
-      
-      <Text style={styles.sectionTitle}>Tasks to Complete</Text>
+      <Text style={styles.sectionHeader}>Uncompleted Tasks</Text>
       <FlatList
-        data={tasks}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity style={styles.taskItem} onPress={() => completeTask(index)}>
-            <Text style={styles.taskText}>{item}</Text>
-          </TouchableOpacity>
+        data={uncompletedTasks}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TaskItem
+            task={item}
+            onComplete={completeTask}
+            onDelete={deleteTask}
+          />
         )}
-        ListEmptyComponent={<Text style={styles.emptyText}>No tasks to complete.</Text>}
+        ListEmptyComponent={<Text style={styles.emptyText}>No tasks yet.</Text>}
       />
 
-  
-      <Text style={styles.sectionTitle}>Completed Tasks</Text>
+      <Text style={styles.sectionHeader}>Completed Tasks</Text>
       <FlatList
         data={completedTasks}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <View style={styles.completedTaskItem}>
-            <Text style={styles.completedTaskText}>{item}</Text>
-            <TouchableOpacity onPress={() => deleteTask(index)}>
-              <Text style={styles.deleteText}>Delete</Text>
-            </TouchableOpacity>
-          </View>
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TaskItem
+            task={item}
+            onComplete={completeTask}
+            onDelete={deleteTask}
+          />
         )}
-        ListEmptyComponent={<Text style={styles.emptyText}>No completed tasks.</Text>}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>No completed tasks.</Text>
+        }
       />
     </View>
   );
@@ -75,39 +131,50 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: "#F5F5F5",
+  },
+  header: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 16,
+    backgroundColor:'#66BB6A'
+  },
+  sectionHeader: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginVertical: 8,
+    color: "#333",
   },
   inputContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 16,
   },
   textInput: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 4,
     padding: 8,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   addButton: {
     marginLeft: 8,
-    backgroundColor: '#66BB6A',
+    backgroundColor: "#66BB6A",
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 4,
   },
   addButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  sectionTitle: {
+    color: "#fff",
     fontSize: 18,
-    fontWeight: 'bold',
-    marginVertical: 8,
+    fontWeight: "bold",
   },
   taskItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: 12,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderRadius: 4,
     marginBottom: 8,
     elevation: 2,
@@ -115,28 +182,39 @@ const styles = StyleSheet.create({
   taskText: {
     fontSize: 16,
   },
-  completedTaskItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 12,
-    backgroundColor: '#D3D3D3',
+  completedText: {
+    color: "#4CAF50",
+  },
+  actions: {
+    flexDirection: "row",
+  },
+  completeButton: {
+    backgroundColor: "#FFEB3B",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
     borderRadius: 4,
-    marginBottom: 8,
-    elevation: 2,
+    marginRight: 8,
   },
-  completedTaskText: {
-    fontSize: 16,
-    textDecorationLine: 'line-through',
+  deleteButton: {
+    backgroundColor: "#F44336",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 4,
   },
-  deleteText: {
-    color: '#FF5252',
-    fontWeight: 'bold',
+  actionText: {
+    color: "#FFF",
+    fontWeight: "bold",
   },
   emptyText: {
-    color: '#999',
-    textAlign: 'center',
+    color: "#999",
+    textAlign: "center",
     marginTop: 8,
-    fontStyle: 'italic',
+    fontStyle: "italic",
   },
+  /*header: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 16,
+    backgroundColor:'#66BB6A'
+  */
 });
