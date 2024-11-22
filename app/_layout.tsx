@@ -5,7 +5,7 @@ import { Stack } from 'expo-router';
 
 const StackExpo = () =>{
   return(
-    <Stack >
+    <Stack initialRouteName='Index' >
       <Stack.Screen name="Index" options={{headerShown:false}}/>
       <Stack.Screen name="(home)" options={{headerShown:false}}/>
       <Stack.Screen name="(crops)" />

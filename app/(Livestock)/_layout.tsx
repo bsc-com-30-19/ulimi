@@ -3,7 +3,7 @@ import { Stack } from 'expo-router'
 const Livestock = () => {
   return (
     <Stack>
-      <Stack.Screen name="Produce" options={{headerShown: false,title:"Livestock"}}/>
+      <Stack.Screen name="liveStockMenu" options={{headerShown: false,title:"Livestock"}}/>
 
     </Stack>
   )
