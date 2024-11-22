@@ -7,8 +7,8 @@ import MenuBlock from '../../components/menus/MenuBlock'
 const MenuList=[
   {Mname:'Crops', linkname:'/croppage'},
   {Mname:'Storage', linkname:'/storage'},
-  {Mname:'Tasks', linkname:'/Tasks'},
-  {Mname:'Harvests', linkname:'/Harvest'},
+  {Mname:'Tasks', linkname:'/tasks'},
+  {Mname:'Harvests', linkname:'/harvest'},
 ]
 
 const Home = () => {

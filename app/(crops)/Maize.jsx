@@ -24,12 +24,7 @@ const App = () => {
           </View>
 
           <Text style={styles.sectionTitle}>TREATMENT SCHEDULES</Text>
-          <View style={styles.details}>
-            <Text style={styles.detailText}>- Fertilization: 25 November 2024</Text>
-            <Text style={styles.detailText}>- Herbicide Application: 20 December 2024</Text>
-            <Text style={styles.detailText}>- Insecticide for Pests: 10 January 2025</Text>
-            <Text style={styles.detailText}>- Harvest Prep Treatment: 1 March, 2025</Text>
-          </View>
+        
         </View>
 
         <View style={styles.modalContent}>
@@ -129,7 +124,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 40,
-    backgroundColor: 'green', // Changed background color to green
+    backgroundColor: 'gray', // Changed background color to green
     borderRadius: 20,
     padding: 50, // Increased padding
     alignItems: 'center',
