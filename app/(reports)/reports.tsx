@@ -12,8 +12,8 @@ const reportList =[
 const Reports = () => {
   return (
     <View>
-      <Text>What type of report would you Like to make?</Text>
-      <FlatList className='flex flex-row flex-wrap'
+      <Text className='text-xl font-medium'>What type of report would you like to create?</Text>
+      <FlatList className=' w-full mt-16'
             data={reportList}
             renderItem={({item})=>(
               <ReportButtonNext text={item.reportType} link={item.linkName}/>
