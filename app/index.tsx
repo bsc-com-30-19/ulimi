@@ -1,19 +1,11 @@
-import { Link } from 'expo-router';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { Redirect } from 'expo-router'
 
-export default function Index() {
+const Index = () => {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-      <Link href="/(crops)"> crops </Link>
-      <Link href="/(weather)"> weather </Link>
-      <Link href="/(data_viz)"> data visualisation </Link>
-    </View>
-  );
+    <Redirect href="/(home)"/>
+  )
 }
+
+export default Index
