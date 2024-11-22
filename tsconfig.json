@@ -3,9 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   "include": [
@@ -16,7 +14,9 @@
     "app/crops/index.jsx",
     "app/+html.jsx",
     "app/_layout.jsx",
-    "app/crops/farmmanagement.tsx",
-    "nativewind-env.d.ts"
-, "app/(home)/(helpSupport)/_layout.jsx"  ]
+    "app/(crops)/farmmanagement.tsx",
+    "nativewind-env.d.ts",
+    "app/(weather)/index.jsx"
+    "app/(home)/(helpSupport)/_layout.jsx"
+  ]
 }
