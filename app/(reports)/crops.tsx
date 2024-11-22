@@ -1,12 +1,45 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, Button } from 'react-native'
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import Checkbox from 'expo-checkbox'
+import Checklist from '@/components/reports/checklist'
+import CustomInput from '@/components/forms/CustomInput'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-const crops = () => {
+type DateInputs = {
+    Date1:string,
+    Date2:string,
+}
+
+const Crops = () => {
+    const {bottom} = useSafeAreaInsets();
+    const [isChecked, setChecked] = useState(false);
+    const {control, register, handleSubmit, watch, formState:{errors}} = useForm<DateInputs>(
+        {defaultValues:{
+          Date1:'',
+          Date2:'',
+        }}
+      )
   return (
     <View>
-      <Text>crops</Text>
+        <Checklist text='Crop Yield Summary' isChecked={isChecked} setChecked={setChecked}/>
+        <Checklist text='Planting and Harvest Dates' isChecked={isChecked} setChecked={setChecked}/>
+        
+        <View>
+        <Text>Start Date:</Text>
+        <CustomInput control={control} placeholder='DD/MM/YYYY' name='date1'/>
+        <Text>End Date:</Text>
+        <CustomInput control={control} placeholder='DD/MM/YYYY' name='date2'/>
+        </View>
+
+        <View style={{paddingBottom: bottom }}>
+        <Button
+            title='Generate Report'
+            color='#37520B'
+        />
+        </View>
     </View>
   )
 }
 
-export default crops
+export default Crops
