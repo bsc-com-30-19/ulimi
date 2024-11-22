@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import React from 'react'
 import {useForm} from 'react-hook-form';
 import CustomInput from '@/components/forms/CustomInput'
@@ -33,6 +33,18 @@ const accountManagement = () => {
       <Text className='font-semibold text-base mb-2'>New Password</Text>
       <CustomInput textInputStyle='bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-14' name="rpassword" placeholder="Please re-enter password" control={control} secureTextEntry/>
       
+      <Button 
+         title="Save Changes"
+         color="#37520B"
+         accessibilityLabel="Save Changes"
+      />
+
+      <Button 
+         title="Discard"
+         color="#37520B"
+         accessibilityLabel="Discard"
+      />
+
     </View>
   )
 }
