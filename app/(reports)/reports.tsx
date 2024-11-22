@@ -1,10 +1,11 @@
 import { View, Text, FlatList } from 'react-native';
 import React from 'react';
-import ReportButtonNext from '@/components/reports/reportButtonNext';
-const reportList =[
-    {reportType:'Finances', linkName:'/finances'},
-    {reportType:'Livestock', linkName:'/livestock'},
-    {reportType:'Crops', linkName:'/crops'},
+import MenuBlock from '@/components/menus/MenuBlock';
+
+const MenuList =[
+    {Mname:'Finances', linkname:'/finances'},
+    {Mname:'Livestock', linkname:'/livestock'},
+    {Mname:'Crops', linkname:'/crops'},
 ]
 
 
@@ -13,13 +14,13 @@ const Reports = () => {
   return (
     <View>
       <Text className='text-xl font-medium'>What type of report would you like to create?</Text>
-      <FlatList className=' w-full mt-16'
-            data={reportList}
+        <FlatList
+          className='flex flex-row flex-wrap mx-auto'
+            data={MenuList}
             renderItem={({item})=>(
-              <ReportButtonNext text={item.reportType} link={item.linkName}/>
-                
+              <MenuBlock name={item.Mname} link={item.linkname}/>
             )}
-            numColumns={1}
+            numColumns={2}
         />
     </View>
   )

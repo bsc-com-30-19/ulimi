@@ -6,6 +6,10 @@ const _layout = () => {
   return (
     <Stack>
         <Stack.Screen name='reports'/>
+        <Stack.Screen name='crops'/>
+        <Stack.Screen name='livestock'/>
+        <Stack.Screen name='finances'/>
+        <Stack.Screen name='reportsave'/>
     </Stack>
   )
 }

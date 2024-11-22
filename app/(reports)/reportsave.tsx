@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const livestock = () => {
+const reportsave = () => {
   return (
     <View>
-      <Text>livestock</Text>
+      <Text>reportsave</Text>
     </View>
   )
 }
 
-export default livestock
+export default reportsave
