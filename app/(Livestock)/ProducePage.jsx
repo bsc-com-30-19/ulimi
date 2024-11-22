@@ -106,7 +106,7 @@ export default function ProducePage() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Manage Produce</Text>
+      {/*<Text style={styles.header}>Manage Produce</Text>*/}
       <TextInput
         style={[styles.textInput, styles.searchBar]}
         placeholder="Search Produce"

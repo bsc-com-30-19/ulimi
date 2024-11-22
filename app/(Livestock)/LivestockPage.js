@@ -19,8 +19,8 @@ export default function LivestockPage({ navigation }) {
       <View style={styles.header}>
       {/*<TouchableOpacity onPress={() => setViewMode('list')}>
           <Text style={styles.backArrow}>←</Text>
-        </TouchableOpacity>*/}
-        <Text style={styles.title}>Livestock List</Text>
+        </TouchableOpacity>
+        <Text style={styles.title}>Livestock List</Text>*/}
       </View>
       {livestockData.length > 0 ? (
         <FlatList
@@ -54,12 +54,12 @@ export default function LivestockPage({ navigation }) {
 
   const renderAddLivestock = () => (
     <View style={styles.container}>
-      <View style={styles.header}>
+      {/*<View style={styles.header}>
         <TouchableOpacity onPress={() => setViewMode('list')}>
           <Text style={styles.backArrow}>←</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Add Livestock</Text>
-      </View>
+      </View>*/}
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Breed:</Text>
         <TextInput
@@ -162,14 +162,14 @@ export default function LivestockPage({ navigation }) {
 
   const renderEditLivestock = () => (
     <View style={styles.container}>
-      <View style={styles.header}>
+      {/*<View style={styles.header}>
         <TouchableOpacity onPress={() => setViewMode('list')}>
           <Text style={styles.backArrow}>←</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Edit Livestock</Text>
-      </View>
+      </View>*/}
       <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Breed:</Text>
+        <Text style={styles.inputLabel}>Name:</Text>
         <TextInput
           style={styles.input}
           value={formData.breed}

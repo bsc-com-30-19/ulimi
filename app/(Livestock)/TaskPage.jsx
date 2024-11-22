@@ -70,7 +70,7 @@ export default function TaskPage() {
       {
         text: "Delete",
         onPress: () => {
-          setTaskList((prevList) => prevList.filter((task) => task.id !== id)); // Remove task by ID
+          setTaskList((prevList) => prevList.filter((task) => task.id !== id)); 
         },
       },
     ]);
@@ -81,7 +81,7 @@ export default function TaskPage() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Manage Tasks</Text>
+      {/*<Text style={styles.header}>Manage Tasks</Text>*/}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.textInput}
