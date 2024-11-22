@@ -4,10 +4,11 @@ import "../../global.css"
 import MenuBlock from '@/components/menus/MenuBlock';
 
 const MenuList=[
-  {Mname:'Crops', linkname:'../(crops)/CropHome', route:"(crops)"},
-  {Mname:'Data Visualisation', linkname:'../(data_viz)/dataScreen', route:"(data_viz)" },
-  {Mname:'Weather', linkname:'../(weather)/weather', route:"(weather)"},
-  {Mname:'livestock', linkname:'../(livestock)/liveStockMenu', route:"(livestock)"},
+  {Mname:'Crops', linkname:'../(crops)/CropHome'},
+  {Mname:'Data Visualisation', linkname:'../(data_viz)/dataScreen'},
+  {Mname:'Weather', linkname:'../(weather)/weather'},
+  {Mname:'Livestock', linkname:'../(livestock)/liveStockMenu'},
+  {Mname:'Reports', linkname:'../(reports)/reports'}
 ]
 
 export default function Index() {
