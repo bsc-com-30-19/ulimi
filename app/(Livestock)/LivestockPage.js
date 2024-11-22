@@ -17,7 +17,7 @@ export default function LivestockPage({ navigation }) {
   const renderLivestockList = () => (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+      <TouchableOpacity onPress={() => setViewMode('list')}>
           <Text style={styles.backArrow}>←</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Livestock List</Text>
@@ -246,8 +246,8 @@ export default function LivestockPage({ navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#fff' },
   header: { flexDirection: 'row', alignItems: 'center', marginBottom: 20, backgroundColor: '#4CAF50'},
-  backArrow: { fontSize: 24, marginRight: 10 },
-  title: { fontSize: 24, fontWeight: 'bold', color: '#fff' },
+  backArrow: { fontSize: 20, marginRight: 40 },
+  title: { fontSize: 20, fontWeight: 'bold', color: '#fff' },
   listItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc' },
   floatingButton: {
     position: 'absolute',
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
   },
   floatingButtonText: { fontSize: 24, color: '#fff', fontWeight: 'bold' },
   //inputContainer: { marginBottom: 20},
-  inputLabel: { fontSize: 16, marginBottom: 0},
+  inputLabel: { fontSize: 14,  marginBottom: 0},
   input: { borderWidth: 1, borderColor: '#ccc', padding: 10, fontSize: 16 },
   button: {
     backgroundColor: '#4CAF50', 
