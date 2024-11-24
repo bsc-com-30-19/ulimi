@@ -11,7 +11,7 @@ const App = () => {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <View style={styles.topTab}>
-          <Text style={styles.tabText}>TOBBACO</Text>
+          <Text style={styles.tabText}>GROUND NUTS</Text>
         </View>
         <View style={styles.content}>
           <Modal
