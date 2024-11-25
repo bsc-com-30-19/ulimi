@@ -11,7 +11,7 @@ interface CustomInputProps {
     textInputStyle?: string,
     }
 
-const CustomInput : React.FC<CustomInputProps> = ({control, name, placeholder, rules, secureTextEntry, textInputStyle}) => {
+const CustomInput : React.FC<CustomInputProps> = ({control, name, placeholder, rules, secureTextEntry, textInputStyle='bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7'}) => {
   return (
     <View>
       <Controller
