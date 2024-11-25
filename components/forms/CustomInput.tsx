@@ -13,12 +13,14 @@ interface CustomInputProps {
 
 const CustomInput : React.FC<CustomInputProps> = ({control, name, placeholder, rules, secureTextEntry, textInputStyle='bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7'}) => {
   return (
+   
     <View>
       <Controller
           control = {control}
           name = {name}
           rules = {rules}
-          render = {({field:{onChange,value}}) =>(
+          render = {({field:{onChange,value}, fieldState:{error}}) =>(
+            <>
             <TextInput 
             className={textInputStyle}
             onChangeText={onChange} 
@@ -26,8 +28,13 @@ const CustomInput : React.FC<CustomInputProps> = ({control, name, placeholder, r
             placeholder={placeholder} 
             secureTextEntry = {secureTextEntry}
             />
+            {error && (
+              <Text className='text-red-600'>{error.message || 'Error'} </Text>
+            )}
+           </>
           )}
         />
+
     </View>
   )
 }

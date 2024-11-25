@@ -5,11 +5,11 @@ import { Stack } from 'expo-router'
 const _layout = () => {
   return (
     <Stack>
-        <Stack.Screen name='reports'/>
-        <Stack.Screen name='crops'/>
-        <Stack.Screen name='livestock'/>
-        <Stack.Screen name='finances'/>
-        <Stack.Screen name='reportsave'/>
+        <Stack.Screen name='reports' options={{title:'Reports'}}/>
+        <Stack.Screen name='crops' options={{title:'Crops'}}/>
+        <Stack.Screen name='livestock' options={{title:'Livestock'}}/>
+        <Stack.Screen name='finances' options={{title:'Finances'}}/>
+        <Stack.Screen name='reportsave' options={{title:'Save Report'}}/>
     </Stack>
   )
 }
