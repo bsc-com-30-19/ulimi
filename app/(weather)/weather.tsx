@@ -11,6 +11,9 @@ interface Temperature {
   Metric: {
     Value: number;
   };
+  Maximum: {
+    Value: number;
+  };
 }
 
 interface Forecast {
@@ -44,7 +47,7 @@ const formatDate = (dateString: string) => {
   const date = new Date(dateString); // Convert the string to a Date object
   return date.toLocaleDateString('en-US', {
     // Format the date in a human-readable way
-    weekday: 'short', // "Mon", "Tue"
+    weekday: 'long', // "Mon", "Tue"
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -101,18 +104,16 @@ export default function WeatherScreen() {
           <Text className="text-base font-semibold">Today's Weather</Text>
           <Text className="text-[10px]">
             {formatDate('2024-11-11T07:00:00+02:00')}
-          </Text>{' '}
+          </Text>
           {/* Use formatted date */}
           <Text className="text-xl">
             {weatherData?.Temperature?.Metric?.Value}°C
           </Text>
-          <Text className="text-sm">{weatherData?.WeatherText}</Text>{' '}
+          <Text className="text-sm">{weatherData?.WeatherText}</Text>
         </View>
-        <View className="flex flex-row mb-3 ml-5">
-          <TodayItem />
-          <TodayItem />
-          <TodayItem />
-          <TodayItem />
+        <View className="flex flex-row justify-between mb-3 ml-5">
+          <TodayItem icon="Thermometer.svg" />
+          <TodayItem icon="Sun.svg" />
         </View>
       </View>
 
@@ -131,10 +132,10 @@ export default function WeatherScreen() {
           <WeatherListItem
             key={index}
             temperature={forecast.Temperature.Maximum.Value}
-            // date={formatDate(forecast.Date)} // Pass the formatted date
+            date={forecast.Date} // Pass the formatted date
           />
         ))}
-        <View className="mt-[22px] mb-4">
+        <View className="mt-[22px] mb-4 hidden">
           <View className="flex flex-row items-end justify-between mx-4">
             <View className="flex flex-row">
               <View className="size-[42px] rounded-full p-[11px] bg-white flex">
