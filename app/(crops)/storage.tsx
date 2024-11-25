@@ -1,12 +1,30 @@
 import React, { useState } from 'react';
 import { Alert, Modal, StyleSheet, Text, TextInput, Pressable, View, ScrollView } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Import FontAwesome icons
 
 const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [cropName, setCropName] = useState('');
   const [date, setDate] = useState('');
   const [amount, setAmount] = useState('');
+  const [crops, setCrops] = useState([
+    { name: 'Maize', date: '11/11/2024', amount: '4000 kg' },
+    // Add initial crops here
+  ]);
+
+  const addCrop = () => {
+    setCrops([...crops, { name: cropName, date: date, amount: amount }]);
+    setCropName('');
+    setDate('');
+    setAmount('');
+    setModalVisible(false);
+  };
+
+  const deleteCrop = (index: number) => {
+    const newCrops = crops.filter((_, i) => i !== index);
+    setCrops(newCrops);
+  };
 
   return (
     <SafeAreaProvider>
@@ -17,16 +35,19 @@ const App = () => {
 
         <ScrollView style={styles.content}>
           <View style={styles.tableHeader}>
-            <Text style={styles.tableHeaderText}>Component Name</Text>
-            <Text style={styles.tableHeaderText}>Date of storing</Text>
-            <Text style={styles.tableHeaderText}>Amount of Yield</Text>
+            <Text style={[styles.tableHeaderText, styles.tableTextName]}>Crop Name</Text>
+            <Text style={[styles.tableHeaderText, styles.tableTextDate]}>Date of storing</Text>
+            <Text style={[styles.tableHeaderText, styles.tableTextAmount]}>Amount of Yield</Text>
+            <Text style={styles.tableHeaderText}></Text> {/* Empty header for bin icon */}
           </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.tableText}>Maize</Text>
-            <Text style={styles.tableText}>11/11/2024</Text>
-            <Text style={styles.tableText}>4000 kg</Text>
-          </View>
-          {/* Add more table rows as needed */}
+          {crops.map((crop, index) => (
+            <View style={styles.tableRow} key={index}>
+              <Text style={[styles.tableText, styles.tableTextName]}>{crop.name}</Text>
+              <Text style={[styles.tableText, styles.tableTextDate]}>{crop.date}</Text>
+              <Text style={[styles.tableText, styles.tableTextAmount]}>{crop.amount}</Text>
+              <Icon name="trash" size={20} color="red" onPress={() => deleteCrop(index)} />
+            </View>
+          ))}
         </ScrollView>
 
         <View style={styles.modalContent}>
@@ -44,28 +65,28 @@ const App = () => {
                 <TextInput
                   style={[styles.input, styles.inputText]}
                   placeholder="CROP NAME"
-                  placeholderTextColor="white" // Set placeholder text color to white
+                  placeholderTextColor="white"
                   value={cropName}
                   onChangeText={setCropName}
                 />
                 <TextInput
                   style={[styles.input, styles.inputText]}
                   placeholder="DATE"
-                  placeholderTextColor="white" // Set placeholder text color to white
+                  placeholderTextColor="white"
                   value={date}
                   onChangeText={setDate}
                 />
                 <TextInput
                   style={[styles.input, styles.inputText]}
                   placeholder="AMOUNT OF YIELD"
-                  placeholderTextColor="white" // Set placeholder text color to white
+                  placeholderTextColor="white"
                   value={amount}
                   onChangeText={setAmount}
                   keyboardType="numeric"
                 />
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible(!modalVisible)}>
+                  onPress={addCrop}>
                   <Text style={styles.textStyle}>Add</Text>
                 </Pressable>
               </View>
@@ -116,7 +137,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
-    flex: 1,
   },
   tableRow: {
     flexDirection: 'row',
@@ -127,7 +147,15 @@ const styles = StyleSheet.create({
   tableText: {
     fontSize: 16,
     textAlign: 'center',
-    flex: 1,
+  },
+  tableTextName: {
+    flex: 3,
+  },
+  tableTextDate: {
+    flex: 3,
+  },
+  tableTextAmount: {
+    flex: 2,
   },
   modalContent: {
     justifyContent: 'center',
