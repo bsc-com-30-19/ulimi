@@ -5,10 +5,11 @@ import MenuBlock from '@/components/menus/MenuBlock';
 
 const MenuList=[
   {Mname:'Crops', linkname:'../(crops)/CropHome'},
-  {Mname:'Data Visualisation', linkname:'../(data_viz)/dataScreen'},
-  {Mname:'Weather', linkname:'../(weather)/weather'},
   {Mname:'Livestock', linkname:'../(livestock)/liveStockMenu'},
-  {Mname:'Reports', linkname:'../(reports)/reports'}
+  {Mname:'Finances', linkname:'../(finances)/Finances'},
+  {Mname:'Weather', linkname:'../(weather)/weather'},
+  {Mname:'Reports', linkname:'../(reports)/reports'},
+  {Mname:'Data Visualisation', linkname:'../(data_viz)/dataScreen'},
 ]
 
 export default function Index() {
