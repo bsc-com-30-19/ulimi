@@ -3,15 +3,20 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-, "app/(crops)/index.jsx", "app/+html.jsx", "app/_layout.jsx", "app/(crops)/farmmanagement.tsx"  ]
+    "expo-env.d.ts",
+    "app/crops/index.jsx",
+    "app/+html.jsx",
+    "app/_layout.jsx",
+    "app/(crops)/farmmanagement.tsx",
+    "nativewind-env.d.ts",
+    "app/(weather)/index.jsx",
+    "app/(home)/(helpSupport)/_layout.jsx",
+  ]
 }
