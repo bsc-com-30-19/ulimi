@@ -161,16 +161,25 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 16,
   },
-  searchBar: {
-    marginBottom: 80,
+  searchBar:{
+    marginBottom:20,
+    padding:4,
+    borderRadius:90,
+    fontSize:16,
+    flex: 0,
+    marginTop: 0,
+    shadowColor:'#999'
+  },
+ /*searchBar: {
+    marginBottom: 40,
     backgroundColor: "#FFF",
-    paddingLeft: 90,
-    paddingRight: 90,
+    paddingLeft: 4,
+    paddingRight: 4,
     fontSize: 16,
-    height:4, 
+    height:0, 
     borderRadius: 180,
     
-  },
+  },*/
   inputContainer: {
     flexDirection: "row",
     marginBottom: 16,
@@ -257,5 +266,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 16,
-    backgroundColor:'#66BB6A'},
+    backgroundColor:'#66BB6A'
+  },
 });

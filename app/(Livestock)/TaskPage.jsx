@@ -37,19 +37,19 @@ const TaskItem = ({ task, onComplete, onDelete }) => {
 
 export default function TaskPage() {
   const [taskInput, setTaskInput] = useState("");
-  const [taskList, setTaskList] = useState([]); // Initially, no tasks are added
+  const [taskList, setTaskList] = useState([]); 
 
   const addTask = () => {
     if (taskInput.trim() !== "") {
       setTaskList([
         ...taskList,
         {
-          id: Date.now().toString(), // Unique ID based on current timestamp
+          id: Date.now().toString(), 
           name: taskInput,
           completed: false,
         },
       ]);
-      setTaskInput(""); // Clear input after task is added
+      setTaskInput(""); 
     }
   };
 
