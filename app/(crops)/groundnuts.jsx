@@ -11,7 +11,7 @@ const App = () => {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <View style={styles.topTab}>
-          <Text style={styles.tabText}>TOBBACO</Text>
+          <Text style={styles.tabText}>GROUND NUTS</Text>
         </View>
         <View style={styles.content}>
           <Modal
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 40,
-    backgroundColor: 'green', // Changed background color to green
+    backgroundColor: 'gray', // Changed background color to green
     borderRadius: 20,
     padding: 50, // Increased padding
     alignItems: 'center',
