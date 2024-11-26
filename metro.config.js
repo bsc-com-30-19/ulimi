@@ -5,7 +5,7 @@ const { withNativeWind } = require('nativewind/metro');
 
 const createConfig = () => {
     const config = getDefaultConfig(__dirname);
-  
+    config.resolver.assetExts.push("db")
     const { transformer, resolver } = config;
   
     config.transformer = {
