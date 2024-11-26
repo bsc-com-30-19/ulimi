@@ -8,7 +8,7 @@ const StackExpo = () =>{
     <Stack initialRouteName='Index' >
       <Stack.Screen name="Index" options={{headerShown:false}}/>
       <Stack.Screen name="(home)" options={{headerShown:false}}/>
-      <Stack.Screen name="(crops)" options={{title:'Crops'}}/>
+      <Stack.Screen name="(crops)" options={{headerShown:false}}/>
       <Stack.Screen name="(weather)" options={{title:'Weather'}}/>
       <Stack.Screen name="(livestock)" options={{title:'Livestock'}}/>
       <Stack.Screen name="(reports)" options={{headerShown:false}}/>

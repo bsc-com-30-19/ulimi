@@ -1,35 +1,22 @@
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router'; // Import Link from expo-router
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import AddButton from '@/components/forms/AddButton';
+import CropList from '@/components/livestock/CropList';
+
 
 export default function AboutScreen() {
+  const {bottom} = useSafeAreaInsets();
+
   return (
-    <View style={styles.container}>
-      <View style={styles.topBar}>
-        <Text style={styles.topBarText}>Crops</Text>
+    
+    <View className='flex flex-1'>
+      <View className='w-full mx-4'>
+          <CropList cropName='Maize' link='/Maize'/>
+          <CropList cropName='Tobacco' link='tobacco'/>
       </View>
-      <View style={styles.listContainer}>
-        
-          <Link href="/Maize" style={styles.link}>
-            🌽 Maize
-          </Link>
-      
-       
-          <Link href="/Tobacco" style={styles.link}>
-            🚬 Tobacco
-          </Link>
-       
-      
-          <Link href="/groundnuts" style={styles.link}>
-            🥜 Ground Nuts
-          </Link>
-   
-      
-          <Link href="/cassava" style={styles.link}>
-            🥥 Cassava
-          </Link>
-      
-      </View>
+      <AddButton style={{paddingBottom: bottom + 40}}/>
     </View>
   );
 }
