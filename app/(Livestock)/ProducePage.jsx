@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+{/*import React, { useState } from "react";
 import {
   View,
   Text,
@@ -14,139 +14,7 @@ const ProduceItem = ({ item, onEdit, onDelete }) => {
   const [newQuantity, setNewQuantity] = useState(item.quantity.toString());
 
   return (
-    <View style={styles.produceItem}>
-      {isEditing ? (
-        <>
-          <TextInput
-            style={styles.textInput}
-            value={newName}
-            onChangeText={setNewName}
-            placeholder="Produce Name"
-          />
-          <TextInput
-            style={[styles.textInput, styles.quantityInput]}
-            value={newQuantity}
-            onChangeText={setNewQuantity}
-            keyboardType="numeric"
-            placeholder="Quantity"
-          />
-          <TouchableOpacity
-            style={styles.saveButton}
-            onPress={() => {
-              onEdit(item.id, newName, parseInt(newQuantity, 10) || 0);
-              setIsEditing(false);
-            }}
-          >
-            <Text style={styles.saveButtonText}>Save</Text>
-          </TouchableOpacity>
-        </>
-      ) : (
-        <>
-          <View>
-            <Text style={styles.produceText}>
-              {item.name} - {item.quantity}
-            </Text>
-          </View>
-          <View style={styles.actions}>
-            <TouchableOpacity
-              style={styles.editButton}
-              onPress={() => setIsEditing(true)}
-            >
-              <Text style={styles.actionText}>Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.deleteButton}
-              onPress={() => onDelete(item.id)}
-            >
-              <Text style={styles.actionText}>Delete</Text>
-            </TouchableOpacity>
-          </View>
-        </>
-      )}
-    </View>
-  );
-};
-
-export default function ProducePage() {
-  const [produceInput, setProduceInput] = useState("");
-  const [quantityInput, setQuantityInput] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [produceList, setProduceList] = useState([]);
-
-  const addProduce = () => {
-    if (produceInput.trim() !== "" && quantityInput.trim() !== "") {
-      setProduceList([
-        ...produceList,
-        {
-          id: Date.now().toString(),
-          name: produceInput,
-          quantity: parseInt(quantityInput, 10) || 0,
-        },
-      ]);
-      setProduceInput("");
-      setQuantityInput("");
-    }
-  };
-
-  const editProduce = (id, newName, newQuantity) => {
-    setProduceList(
-      produceList.map((item) =>
-        item.id === id ? { ...item, name: newName, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const deleteProduce = (id) => {
-    setProduceList(produceList.filter((item) => item.id !== id));
-  };
-
-  const filteredProduceList = produceList.filter((item) =>
-    item.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  return (
-    <View style={styles.container}>
-      {/*<Text style={styles.header}>Manage Produce</Text>*/}
-      <TextInput
-        style={[styles.textInput, styles.searchBar]}
-        placeholder="Search Produce"
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Produce Name"
-          value={produceInput}
-          onChangeText={setProduceInput}
-        />
-        <TextInput
-          style={[styles.textInput, styles.quantityInput]}
-          placeholder="Quantity"
-          value={quantityInput}
-          onChangeText={setQuantityInput}
-          keyboardType="numeric"
-        />
-        <TouchableOpacity style={styles.addButton} onPress={addProduce}>
-          <Text style={styles.addButtonText}>+</Text>
-        </TouchableOpacity>
-      </View>
-      <FlatList
-        data={filteredProduceList}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <ProduceItem
-            item={item}
-            onEdit={editProduce}
-            onDelete={deleteProduce}
-          />
-        )}
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>No produce found.</Text>
-        }
-        onEndReachedThreshold={0.5}
-      />
-    </View>
+    
   );
 }
 
@@ -179,7 +47,7 @@ const styles = StyleSheet.create({
     height:0, 
     borderRadius: 180,
     
-  },*/
+  },
   inputContainer: {
     flexDirection: "row",
     marginBottom: 16,
@@ -268,4 +136,232 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     backgroundColor:'#66BB6A'
   },
+});*/}
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, TextInput, FlatList, Button, StyleSheet, ScrollView } from 'react-native';
+
+export default function ProducePage({ navigation }) {
+  const [livestockData, setProduceData] = useState([]);
+  const [formData, setFormData] = useState({
+    ProduceType: '',
+    Amount: '',
+    CollectedDate: '',
+   
+  });
+  const [selectedProduce, setSelectedProduce] = useState(null);
+  const [viewMode, setViewMode] = useState('list'); 
+
+ 
+  const renderProduceList = () => (
+    <View style={styles.container}>
+      <View style={styles.header}>
+      <Text style={styles.title}> Produce List</Text>
+      </View>
+      {livestockData.length > 0 ? (
+        <FlatList
+          data={ProduceData}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.listItem}
+              onPress={() => {
+                setSelectedProduce(item);
+                setViewMode('details');
+              }}
+            >
+              <Text>{item.type}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      ) : (
+        <Text style={styles.emptyText}>No produce added yet.</Text>
+      )}
+      
+      <TouchableOpacity
+        style={styles.floatingButton}
+        onPress={() => setViewMode('add')}
+      >
+        <Text style={styles.floatingButtonText}>+</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+
+  const renderAddProduce = () => (
+    <View style={styles.container}>
+    
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>ProduceType:</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.ProduceType}
+          onChangeText={(text) => setFormData({ ...formData, ProduceType: text })}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Amount:</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType='numeric'
+          value={formData.Amount}
+          onChangeText={(text) => setFormData({ ...formData, Amount: text })}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>CollectedDate(YYYY-MM-DD):</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={formData.CollectedDate}
+          onChangeText={(text) =>
+            setFormData({ ...formData, CollectedDate: text.replace(/[^0-9-]/g, '') })
+          }
+        />
+      </View>
+      
+      
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          if (
+            formData.type &&
+            formData.Amount&&
+            formData.CollectedDate 
+            
+           
+          ) {
+            const newItem = { id: Date.now(), ...formData };
+            setProduceData([...produceData, newItem]);
+            setFormData({
+              ProduceType: '',
+              Amount: '',
+              CollectedDate: '',
+             
+            });
+            setViewMode('list');
+          }
+        }}
+      >
+        <Text style={styles.buttonText}>Add Produce</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+
+  const renderProduceDetails = () => (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => setViewMode('list')}>
+          <Text style={styles.backArrow}>←</Text>
+        </TouchableOpacity>
+        <Text style={styles.title}>Produce Details</Text>
+      </View>
+      <Text style={styles.label}>ProduceType: {selectedProduce?.ProduceType}</Text>
+      <Text style={styles.label}>Amount: {selectedProduce?.Amount}</Text>
+      <Text style={styles.label}>CollectedDate: {selectedProduce?.CollectedDate}</Text>
+      
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => setViewMode('edit')}
+      >
+        <Text style={styles.buttonText}>Edit</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  const renderEditProduce = () => (
+    <View style={styles.container}>
+     
+     <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>ProduceType:</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.ProduceType}
+          onChangeText={(text) => setFormData({ ...formData, ProduceType: text })}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Amount:</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType='numeric'
+          value={formData.Amount}
+          onChangeText={(text) => setFormData({ ...formData, Amount: text })}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>CollectedDate(YYYY-MM-DD):</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={formData.CollectedDate}
+          onChangeText={(text) =>
+            setFormData({ ...formData, CollectedDate: text.replace(/[^0-9-]/g, '') })
+          }
+        />
+      </View>
+      
+      
+      
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          const updatedData = produceData.map((item) =>
+            item.id === selectedProduce.id ? { ...item, ...formData } : item
+          );
+          setProduceData(updatedData);
+          setViewMode('list');
+        }}
+      >
+        <Text style={styles.buttonText}>Save Changes</Text>
+      </TouchableOpacity>
+    </View>
+  );
+  
+
+  switch (viewMode) {
+    case 'list':
+      return renderProduceList();
+    case 'add':
+      return renderAddProduce();
+    case 'details':
+      return renderProduceDetails();
+    case 'edit':
+      return renderEditProduce();
+    default:
+      return renderProduceList();
+  }
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 20, backgroundColor: '#fff' },
+  header: { flexDirection: 'row', alignItems: 'center', marginBottom: 20, backgroundColor: '#4CAF50'},
+  backArrow: { fontSize: 20, marginRight: 40 },
+  title: { fontSize: 20, fontWeight: 'bold' , color: 'default'},
+  listItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc' },
+  floatingButton: {
+    position: 'absolute',
+    right: 20,
+    bottom: 20,
+    backgroundColor: '#4CAF50', 
+    borderRadius: 50,
+    padding: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1, 
+  },
+  floatingButtonText: { fontSize: 24, color: '#fff', fontWeight: 'bold' },
+  //inputContainer: { marginBottom: 20},
+  inputLabel: { fontSize: 14,  marginBottom: 0},
+  input: { borderWidth: 1, borderColor: '#ccc', padding: 10, fontSize: 16 },
+  button: {
+    backgroundColor: '#4CAF50', 
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
+  label: { fontSize: 16, marginVertical: 5 },
+  emptyText: { fontSize: 16, color: '#888' },
 });

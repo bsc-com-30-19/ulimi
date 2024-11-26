@@ -4,11 +4,11 @@ import { View, Text, TouchableOpacity, TextInput, FlatList, Button, StyleSheet, 
 export default function LivestockPage({ navigation }) {
   const [livestockData, setLivestockData] = useState([]);
   const [formData, setFormData] = useState({
-    breed: '',
-    purchaseDate: '',
-    livestockType: '',
-    farmedArea: '',
-    numberOfLivestock: '',
+   Name:'',
+    BirthDate: '',
+    VaccinationStatus: '',
+    LivestockType: '',
+
   });
   const [selectedLivestock, setSelectedLivestock] = useState(null);
   const [viewMode, setViewMode] = useState('list'); 
@@ -19,8 +19,8 @@ export default function LivestockPage({ navigation }) {
       <View style={styles.header}>
       {/*<TouchableOpacity onPress={() => setViewMode('list')}>
           <Text style={styles.backArrow}>←</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>Livestock List</Text>*/}
+        </TouchableOpacity>*/}
+        <Text style={styles.title}>Livestock List</Text>
       </View>
       {livestockData.length > 0 ? (
         <FlatList
@@ -34,7 +34,7 @@ export default function LivestockPage({ navigation }) {
                 setViewMode('details');
               }}
             >
-              <Text>{item.breed}</Text>
+              <Text>{item.name}</Text>
             </TouchableOpacity>
           )}
         />
@@ -60,22 +60,23 @@ export default function LivestockPage({ navigation }) {
         </TouchableOpacity>
         <Text style={styles.title}>Add Livestock</Text>
       </View>*/}
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Breed:</Text>
+       <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Name:</Text>
         <TextInput
           style={styles.input}
-          value={formData.breed}
-          onChangeText={(text) => setFormData({ ...formData, breed: text })}
+          value={formData.Name}
+          onChangeText={(text) => setFormData({ ...formData, Name: text })}
         />
       </View>
+      
       <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Purchase Date (YYYY-MM-DD):</Text>
+        <Text style={styles.inputLabel}> Date of birth (YYYY-MM-DD):</Text>
         <TextInput
           style={styles.input}
           keyboardType="numeric"
-          value={formData.purchaseDate}
+          value={formData.BirthDate}
           onChangeText={(text) =>
-            setFormData({ ...formData, purchaseDate: text.replace(/[^0-9-]/g, '') })
+            setFormData({ ...formData, BirthDate: text.replace(/[^0-9-]/g, '') })
           }
         />
       </View>
@@ -83,47 +84,30 @@ export default function LivestockPage({ navigation }) {
         <Text style={styles.inputLabel}>Livestock Type:</Text>
         <TextInput
           style={styles.input}
-          value={formData.livestockType}
-          onChangeText={(text) => setFormData({ ...formData, livestockType: text })}
+          value={formData.LivestockType}
+          onChangeText={(text) => setFormData({ ...formData, LivestockType: text })}
         />
       </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Farmed Area:</Text>
-        <TextInput
-          style={styles.input}
-          value={formData.farmedArea}
-          onChangeText={(text) => setFormData({ ...formData, farmedArea: text })}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Number of Livestock:</Text>
-        <TextInput
-          style={styles.input}
-          keyboardType="numeric"
-          value={formData.numberOfLivestock}
-          onChangeText={(text) =>
-            setFormData({ ...formData, numberOfLivestock: text.replace(/[^0-9]/g, '') })
-          }
-        />
-      </View>
+     
+      
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
           if (
-            formData.breed &&
-            formData.purchaseDate &&
-            formData.livestockType &&
-            formData.farmedArea &&
-            formData.numberOfLivestock
+            formData.Name &&
+            formData.BirthDate &&
+            formData.VaccinationStatus &&
+           
+            formData.LivestockType
           ) {
             const newItem = { id: Date.now(), ...formData };
             setLivestockData([...livestockData, newItem]);
             setFormData({
-              breed: '',
-              purchaseDate: '',
-              livestockType: '',
-              farmedArea: '',
-              numberOfLivestock: '',
+              Name: '',
+              BirthDate: '',
+              VaccinationStatus: '',
+             
+              LivestockType: '',
             });
             setViewMode('list');
           }
@@ -143,13 +127,11 @@ export default function LivestockPage({ navigation }) {
         </TouchableOpacity>
         <Text style={styles.title}>Livestock Details</Text>
       </View>
-      <Text style={styles.label}>Breed: {selectedLivestock?.breed}</Text>
-      <Text style={styles.label}>Purchase Date: {selectedLivestock?.purchaseDate}</Text>
-      <Text style={styles.label}>Livestock Type: {selectedLivestock?.livestockType}</Text>
-      <Text style={styles.label}>Farmed Area: {selectedLivestock?.farmedArea}</Text>
-      <Text style={styles.label}>
-        Number of Livestock: {selectedLivestock?.numberOfLivestock}
-      </Text>
+      <Text style={styles.label}>Name: {selectedLivestock?.breed}</Text>
+      <Text style={styles.label}>BirthDate: {selectedLivestock?.purchaseDate}</Text>
+      <Text style={styles.label}>VaccinationStatus: {selectedLivestock?.livestockType}</Text>
+      <Text style={styles.label}>LivestockType: {selectedLivestock?.farmedArea}</Text>
+      
       <TouchableOpacity
         style={styles.button}
         onPress={() => setViewMode('edit')}
@@ -172,38 +154,38 @@ export default function LivestockPage({ navigation }) {
         <Text style={styles.inputLabel}>Name:</Text>
         <TextInput
           style={styles.input}
-          value={formData.breed}
-          onChangeText={(text) => setFormData({ ...formData, breed: text })}
+          value={formData.Name}
+          onChangeText={(text) => setFormData({ ...formData, Name: text })}
         />
       </View>
       <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Purchase Date (YYYY-MM-DD):</Text>
+        <Text style={styles.inputLabel}>Birth Date (YYYY-MM-DD):</Text>
         <TextInput
           style={styles.input}
           keyboardType="numeric"
-          value={formData.purchaseDate}
+          value={formData.BirthDate}
           onChangeText={(text) =>
-            setFormData({ ...formData, purchaseDate: text.replace(/[^0-9-]/g, '') })
+            setFormData({ ...formData, BirthDate: text.replace(/[^0-9-]/g, '') })
           }
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>Vaccination Status:</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.VaccinationStatus}
+          onChangeText={(text) => setFormData({ ...formData, VaccinationStatus: text })}
         />
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Livestock Type:</Text>
         <TextInput
           style={styles.input}
-          value={formData.livestockType}
-          onChangeText={(text) => setFormData({ ...formData, livestockType: text })}
+          value={formData.LivestockType}
+          onChangeText={(text) => setFormData({ ...formData, LivestockType: text })}
         />
       </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Farmed Area:</Text>
-        <TextInput
-          style={styles.input}
-          value={formData.farmedArea}
-          onChangeText={(text) => setFormData({ ...formData, farmedArea: text })}
-        />
-      </View>
-      <View style={styles.inputContainer}>
+      {/*<View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Number of Livestock:</Text>
         <TextInput
           style={styles.input}
@@ -213,7 +195,7 @@ export default function LivestockPage({ navigation }) {
             setFormData({ ...formData, numberOfLivestock: text.replace(/[^0-9]/g, '') })
           }
         />
-      </View>
+      </View>*/}
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
@@ -247,7 +229,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#fff' },
   header: { flexDirection: 'row', alignItems: 'center', marginBottom: 20, backgroundColor: '#4CAF50'},
   backArrow: { fontSize: 20, marginRight: 40 },
-  title: { fontSize: 20, fontWeight: 'bold', color: '#fff' },
+  title: { fontSize: 20, fontWeight: 'bold', color: 'default' },
   listItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: '#ccc' },
   floatingButton: {
     position: 'absolute',
