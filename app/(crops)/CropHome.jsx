@@ -5,10 +5,10 @@ import { Link } from 'expo-router'; // Import Link from expo-router
 import MenuBlock from '../../components/menus/MenuBlock'
 
 const MenuList=[
-  {Mname:'Crops', linkname:'/crops'},
-  {Mname:'Storage', linkname:'/storage'},
-  {Mname:'Tasks', linkname:'/task'},
-  {Mname:'Harvests', linkname:'/harvest'},
+  {Mname:'Crops', linkname:'./croppage'},
+  {Mname:'Storage', linkname:'./storage/Storage'},
+  {Mname:'Tasks', linkname:'./task/TaskList'},
+  {Mname:'Harvests', linkname:'./harvest/HarvestList'},
 ]
 
 const Home = () => {
