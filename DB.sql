@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS livestock (
     type VARCHAR(100) NOT NULL,
     dob DATE NOT NULL,
     vaccinationstat NOT NULL CHECK (vaccinationstat IN('Vaccinated, Not Vaccinated, Due For Vaccination')),
-    dateplanted DATE NOT NULL);
+    --delete dateplanted DATE NOT NULL
+    );
 
 -- Create Produce Table
 CREATE TABLE IF NOT EXISTS produce (

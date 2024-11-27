@@ -33,10 +33,9 @@ export interface livestocktasks{
 
 export interface livestock{
     id: number;
-    type: 'Vaccinated' | 'Not Vaccinated' | 'Due For Vaccination';
+    type: string;
     dob: Date;
-    vaccinationstat:string;
-    dateplanted:Date;
+    vaccinationstat:'Vaccinated' | 'Not Vaccinated' | 'Due For Vaccination';
 }
 
 export interface produce{

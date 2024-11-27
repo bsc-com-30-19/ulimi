@@ -5,10 +5,9 @@ import * as SQLite from 'expo-sqlite';
 import AddButton from '@/components/forms/AddButton';
 import FormModal from '@/components/forms/FormModal';
 import CustomInput from '@/components/forms/CustomInput';
-import CustomButton from '@/components/forms/CustomButton';
 import { crops } from '@/types';
 import CropsList from '@/components/crops/CropsList';
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type cropInputs = {
   name:string;
