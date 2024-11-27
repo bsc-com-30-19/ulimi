@@ -5,9 +5,9 @@ import { Link } from 'expo-router'; // Import Link from expo-router
 import MenuBlock from '../../components/menus/MenuBlock'
 
 const MenuList=[
-  {Mname:'Crops', linkname:'/croppage'},
+  {Mname:'Crops', linkname:'/crops'},
   {Mname:'Storage', linkname:'/storage'},
-  {Mname:'Tasks', linkname:'/tasks'},
+  {Mname:'Tasks', linkname:'/task'},
   {Mname:'Harvests', linkname:'/harvest'},
 ]
 
