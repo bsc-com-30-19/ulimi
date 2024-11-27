@@ -1,464 +1,160 @@
-{/*import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  FlatList,
-  Alert,
-  StyleSheet,
-} from "react-native";
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 
-const TaskItem = ({ task, onComplete, onDelete }) => {
-  return (
-    <View style={styles.taskItem}>
-      <Text style={[styles.taskText, task.completed && styles.completedText]}>
-        {task.name}
-      </Text>
-      <View style={styles.actions}>
-        {!task.completed && (
-          <TouchableOpacity
-            style={styles.completeButton}
-            onPress={() => onComplete(task.id)}
-          >
-            <Text style={styles.actionText}>Complete</Text>
-          </TouchableOpacity>
-        )}
-        <TouchableOpacity
-          style={styles.deleteButton}
-          onPress={() => onDelete(task.id)}
-        >
-          <Text style={styles.actionText}>Delete</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
+const TaskPage = () => {
+  const [taskInput, setTaskInput] = useState('');
+  const [tasks, setTasks] = useState([]);
+  const [manualDateInput, setManualDateInput] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
 
-export default function TaskPage() {
-  const [taskInput, setTaskInput] = useState("");
-  const [DateInput, setDateInput] = useState("");
-  const [taskList, setTaskList] = useState([]); 
-
-
-  const addTask = (e) => {
-    e.preventDefault();
-    if (taskInput.trim() !== "" && DateInput.trim() !=="") {
-      setTaskList([
-        ...taskList,
-        {
-          id: Date.now().toString(), 
-          name: taskInput,
-          date: DateInput,
-         
-        },
-      ]);
-      setTaskInput("");
-      setDateInput("") ;
+  const handleManualDateInput = (date) => {
+    setManualDateInput(date);
+    const validDate = /^\d{4}-\d{2}-\d{2}$/.test(date);
+    if (!validDate) {
+      Alert.alert('Invalid date format', 'Please use the format YYYY-MM-DD');
     }
   };
 
-  
-
-  const completeTask = (id) => {
-    setTaskList(
-      taskList.map((task) =>
-        task.id === id ? { ...task, completed: true } : task
-      )
-    );
+  const addOrUpdateTask = () => {
+    if (taskInput && manualDateInput) {
+      if (isEditing) {
+        const updatedTasks = tasks.map((task, index) =>
+          index === editIndex ? { task: taskInput, date: manualDateInput } : task
+        );
+        setTasks(updatedTasks);
+        setIsEditing(false);
+        setEditIndex(null);
+      } else {
+        const newTask = { task: taskInput, date: manualDateInput };
+        setTasks([...tasks, newTask]);
+      }
+      setTaskInput('');
+      setManualDateInput('');
+    } else {
+      Alert.alert('Missing Information', 'Please enter a task and a valid date');
+    }
   };
 
-  const deleteTask = (id) => {
-    Alert.alert("Delete Task", "Are you sure you want to delete this task?", [
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-      {
-        text: "Delete",
-        onPress: () => {
-          setTaskList((prevList) => prevList.filter((task) => task.id !== id)); 
-        },
-      },
-    ]);
+  const deleteTask = (index) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
   };
 
-  const uncompletedTasks = taskList.filter((task) => !task.completed);
-  const completedTasks = taskList.filter((task) => task.completed);
+  const editTask = (index) => {
+    setTaskInput(tasks[index].task);
+    setManualDateInput(tasks[index].date);
+    setIsEditing(true);
+    setEditIndex(index);
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Manage Tasks</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Task Name"
-          value={taskInput}
-          onChangeText={setTaskInput}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.DateInput}
-          type ='date'
-          placeholder="Due Date"
-          value={DateInput}
-          onChangeText={setDateInput}
-        />
-      </View>
-      <TouchableOpacity style={styles.addButton} onPress={addTask}>
-          <Text style={styles.addButtonText}>+</Text>
-        </TouchableOpacity>
-      <Text style={styles.sectionHeader}>Uncompleted Tasks</Text>
-      <FlatList
-        data={uncompletedTasks}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TaskItem
-            task={item}
-            onComplete={completeTask}
-            onDelete={deleteTask}
-          />
-        )}
-        ListEmptyComponent={<Text style={styles.emptyText}>No tasks yet.</Text>}
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Task Page</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Enter task"
+        value={taskInput}
+        onChangeText={setTaskInput}
       />
 
-      <Text style={styles.sectionHeader}>Completed Tasks</Text>
-      <FlatList
-        data={completedTasks}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TaskItem
-            task={item}
-            onComplete={completeTask}
-            onDelete={deleteTask}
-          />
-        )}
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>No completed tasks.</Text>
-        }
+      <TextInput
+        style={styles.input}
+        placeholder="Enter date (YYYY-MM-DD)"
+        value={manualDateInput}
+        onChangeText={handleManualDateInput}
       />
-    </View>
+
+      <TouchableOpacity style={styles.button} onPress={addOrUpdateTask}>
+        <Text style={styles.buttonText}>{isEditing ? 'Update Task' : 'Add Task'}</Text>
+      </TouchableOpacity>
+
+      <View style={styles.tasksContainer}>
+        {tasks.length === 0 ? (
+          <Text>No tasks yet</Text>
+        ) : (
+          tasks.map((task, index) => (
+            <View key={index} style={styles.taskItem}>
+              <Text>{task.task}</Text>
+              <Text>{task.date}</Text>
+              <View style={styles.taskActions}>
+                <TouchableOpacity
+                  style={styles.editButton}
+                  onPress={() => editTask(index)}
+                >
+                  <Text style={styles.buttonText}>Edit</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.deleteButton}
+                  onPress={() => deleteTask(index)}
+                >
+                  <Text style={styles.buttonText}>Delete</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))
+        )}
+      </View>
+    </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#F5F5F5",
+    padding: 20,
+    justifyContent: 'center',
   },
-  header: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 16,
-    backgroundColor:'#66BB6A'
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
   },
-  sectionHeader: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginVertical: 8,
-    color: "#333",
-  },
-  inputContainer: {
-    flexDirection: "row",
-    marginBottom: 16,
-  },
-  textInput: {
-    flex: 1,
+  input: {
+    height: 40,
+    borderColor: 'gray',
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 4,
-    padding: 8,
-    backgroundColor: "#fff",
+    marginBottom: 10,
+    paddingLeft: 10,
   },
-  addButton: {
-    
-    backgroundColor: "#66BB6A",
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 4,
-  },
-  addButtonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
+  tasksContainer: {
+    marginTop: 20,
   },
   taskItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 12,
-    backgroundColor: "#FFF",
-    borderRadius: 4,
-    marginBottom: 8,
-    elevation: 2,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
+    padding: 10,
   },
-  taskText: {
-    fontSize: 16,
-  },
-  completedText: {
-    color: "#4CAF50",
-  },
-  actions: {
-    flexDirection: "row",
-  },
-
-  actionText: {
-    color: "#FFF",
-    fontWeight: "bold",
-  },
-  emptyText: {
-    color: "#999",
-    textAlign: "center",
-    marginTop: 8,
-    fontStyle: "italic",
+  taskActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
   },
   button: {
-    backgroundColor: '#4CAF50', 
+    backgroundColor: '#4CAF50',
     padding: 10,
-    marginTop: 10,
     borderRadius: 5,
+    marginVertical: 10,
     alignItems: 'center',
   },
-  
- });*/}
- import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  FlatList,
-  Alert,
-  StyleSheet,
-} from "react-native";
-
-{/*const TaskItem = ({ task, onComplete, onDelete }) => (
-  <View style={styles.taskItem}>
-    <Text style={[styles.taskText, task.completed && styles.completedText]}>
-      {task.name} {task.date && <Text style={styles.dateText}>({task.date})</Text>}
-    </Text>
-    <View style={styles.actions}>
-      {!task.completed && (
-        <TouchableOpacity
-          style={styles.completeButton}
-          onPress={() => onComplete(task.id)}
-        >
-          <Text style={styles.actionText}>Complete</Text>
-        </TouchableOpacity>
-      )}
-      <TouchableOpacity
-        style={styles.deleteButton}
-        onPress={() => onDelete(task.id)}
-      >
-        <Text style={styles.actionText}>Delete</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-);*/}
-
-// Main Component
-const TaskPage = () => {
-  const [taskInput, setTaskInput] = useState("");
-  const [dateInput, setDateInput] = useState("");
-  const [taskList, setTaskList] = useState([]);
-
-
-  const addTask = () => {
-    if (taskInput.trim() === "" || dateInput.trim() === "") {
-      Alert.alert("Error", "Both Task Name and Due Date are required.");
-      return;
-    }
-
-    setTaskList((prevList) => [
-      ...prevList,
-      {
-        id: Date.now().toString(),
-        name: taskInput,
-        date: dateInput,
-        completed: false,
-      },
-    ]);
-    setTaskInput("");
-    setDateInput("");
-  };
-
- 
-  /*const completeTask = (id) => {
-    setTaskList((prevList) =>
-      prevList.map((task) =>
-        task.id === id ? { ...task, completed: true } : task
-      )
-    );
-  };*/
-
- 
-  const deleteTask = (id) => {
-    Alert.alert("Delete Task", "Are you sure you want to delete this task?", [
-      { text: "Cancel", style: "cancel" },
-      {
-        text: "Delete",
-        onPress: () =>
-          setTaskList((prevList) => prevList.filter((task) => task.id !== id)),
-      },
-    ]);
-  };
-
-  
-  //const uncompletedTasks = taskList.filter((task) => !task.completed);
-  //const completedTasks = taskList.filter((task) => task.completed);
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Manage Tasks</Text>
-
-  
-      <View style={styles.inputSection}>
-  <TextInput
-    style={styles.textInput}
-    placeholder="Task Name"
-    value={taskInput}
-    onChangeText={setTaskInput}
-  />
-  <TextInput
-    style={styles.dateInput}
-    placeholder="Due Date (YYYY-MM-DD)"
-    value={dateInput}
-    onChangeText={setDateInput}
-  />
-  <TouchableOpacity style={styles.addButton} onPress={addTask}>
-    <Text style={styles.addButtonText}>+</Text>
-  </TouchableOpacity>
-</View>
-
-
-    
-      {/*<Text style={styles.sectionHeader}>Uncompleted Tasks</Text>
-      <FlatList
-        data={uncompletedTasks}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TaskItem task={item} onComplete={completeTask} onDelete={deleteTask} />
-        )}
-        ListEmptyComponent={<Text style={styles.emptyText}>No tasks yet.</Text>}
-      />
-
-     
-      <Text style={styles.sectionHeader}>Completed Tasks</Text>
-      <FlatList
-        data={completedTasks}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TaskItem task={item} onComplete={completeTask} onDelete={deleteTask} />
-        )}
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>No completed tasks.</Text>
-        }
-      />*/}
-    </View>
-  );
-};
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: "#F5F5F5",
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
-    textAlign: "center",
-    backgroundColor: "#4CAF50",
-  },
-  inputSection: {
-    flexDirection: "row",
-    marginBottom: 16,
-    alignItems: "center",
-  },
-  textInput: {
-    flex: 2,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 4,
-    padding: 8,
-    backgroundColor: "#fff",
-    marginRight: 8,
-  },
-  dateInput: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 4,
-    padding: 8,
-    backgroundColor: "#fff",
-    marginRight: 8,
-  },
-  addButton: {
-    backgroundColor: "#66BB6A",
-    padding: 10,
-    borderRadius: 4,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  addButtonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  sectionHeader: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginVertical: 8,
-    color: "#333",
-  },
-  taskItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 12,
-    backgroundColor: "#FFF",
-    borderRadius: 4,
-    marginBottom: 8,
-    elevation: 2,
-  },
-  taskText: {
+  buttonText: {
+    color: 'white',
     fontSize: 16,
   },
-  completedText: {
-    color: "#4CAF50",
-    textDecorationLine: "line-through",
-  },
-  dateText: {
-    fontSize: 14,
-    color: "#999",
-  },
-  actions: {
-    flexDirection: "row",
-  },
-  completeButton: {
-    backgroundColor: "#4CAF50",
-    padding: 8,
-    borderRadius: 4,
-    marginRight: 8,
+  editButton: {
+    backgroundColor: '#2196F3',
+    padding: 5,
+    borderRadius: 5,
+    marginRight: 5,
   },
   deleteButton: {
-    backgroundColor: "#F44336",
-    padding: 8,
-    borderRadius: 4,
-  },
-  actionText: {
-    color: "#FFF",
-    fontWeight: "bold",
-  },
-  emptyText: {
-    color: "#999",
-    textAlign: "center",
-    marginTop: 8,
-    fontStyle: "italic",
+    backgroundColor: '#F44336',
+    padding: 5,
+    borderRadius: 5,
   },
 });
 
