@@ -4,7 +4,9 @@ import { Redirect } from 'expo-router'
 
 const Index = () => {
   return (
+    <View className='bg-slate-800'>
     <Redirect href="/(home)"/>
+    </View>
   )
 }
 

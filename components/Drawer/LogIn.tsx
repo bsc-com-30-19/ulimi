@@ -4,13 +4,16 @@ import {useForm} from 'react-hook-form';
 import CustomInput from '../forms/CustomInput';
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Link } from 'expo-router';
+import CustomButton from '../forms/CustomButton';
 
 type Inputs ={
     email:string,
     password:string,
 }
 
-
+const onLoginPressed = (data:any) =>{
+  console.log(data);
+}
 const LogIn = () => {
     const {bottom} = useSafeAreaInsets();
     const {control, register, handleSubmit, watch, formState:{errors}} = useForm<Inputs>(
@@ -28,6 +31,13 @@ const LogIn = () => {
         name="email"
         placeholder="Isaac@com311.com"
         control={control}
+        rules={{
+          required:'Please enter your email',
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: "invalid email address"
+          },
+        }}
       />
 
       <Text className="font-semibold text-base mb-2">Password</Text>
@@ -37,14 +47,12 @@ const LogIn = () => {
         placeholder="Enter your accounts password"
         control={control}
         secureTextEntry
+        rules={{
+          required:'Please enter your password',
+        }}
       />
 
-      <Button 
-        
-        title="Log In"
-        color="#37520B"
-        accessibilityLabel="Log In"
-      />
+      <CustomButton onPress={handleSubmit(onLoginPressed)} text="LogIn"/>
 
       <Link href={'/signup'} className='mt-6 mb'>
         <Text>Don't have an account? Click to Sign Up</Text>

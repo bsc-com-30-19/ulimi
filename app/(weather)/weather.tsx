@@ -104,12 +104,12 @@ export default function WeatherScreen() {
           <Text className="text-base font-semibold">Today's Weather</Text>
           <Text className="text-[10px]">
             {formatDate('2024-11-11T07:00:00+02:00')}
-          </Text>{' '}
+          </Text>
           {/* Use formatted date */}
           <Text className="text-xl">
             {weatherData?.Temperature?.Metric?.Value}°C
           </Text>
-          <Text className="text-sm">{weatherData?.WeatherText}</Text>{' '}
+          <Text className="text-sm">{weatherData?.WeatherText}</Text>
         </View>
         <View className="flex flex-row justify-between mb-3 ml-5">
           <TodayItem icon="Thermometer.svg" />

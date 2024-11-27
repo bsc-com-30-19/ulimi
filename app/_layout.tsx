@@ -5,13 +5,15 @@ import { Stack } from 'expo-router';
 
 const StackExpo = () =>{
   return(
-    <Stack >
+    <Stack initialRouteName='Index' >
       <Stack.Screen name="Index" options={{headerShown:false}}/>
       <Stack.Screen name="(home)" options={{headerShown:false}}/>
-      <Stack.Screen name="(crops)" />
-      <Stack.Screen name="(weather)" />
-      <Stack.Screen name="(livestock)" />
-      <Stack.Screen name="(data_viz)" />
+      <Stack.Screen name="(crops)" options={{title:'Crops'}}/>
+      <Stack.Screen name="(weather)" options={{title:'Weather'}}/>
+      <Stack.Screen name="(livestock)" options={{title:'Livestock'}}/>
+      <Stack.Screen name="(reports)" options={{headerShown:false}}/>
+      <Stack.Screen name="(data_viz)" options={{title:'Data Vizualition'}}/>
+      <Stack.Screen name="(finances)" />
     </Stack>
   )
 }
