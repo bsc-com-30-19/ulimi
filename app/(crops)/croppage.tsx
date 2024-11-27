@@ -1,9 +1,8 @@
-import { Text, View, StyleSheet, TouchableOpacity, ScrollView, ScrollViewBase } from 'react-native';
+import { Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import {useForm} from 'react-hook-form';
 import * as SQLite from 'expo-sqlite';
 import AddButton from '@/components/forms/AddButton';
-import CropList from '@/components/crops/CropList';
 import FormModal from '@/components/forms/FormModal';
 import CustomInput from '@/components/forms/CustomInput';
 import CustomButton from '@/components/forms/CustomButton';

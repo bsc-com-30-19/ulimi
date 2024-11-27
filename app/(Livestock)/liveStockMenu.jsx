@@ -10,7 +10,7 @@ const MenuList=[
 ]
 
 
-export default function Dashboard({ navigation }) {
+export default function Dashboard() {
   return(<FlatList
   className='flex flex-row flex-wrap mx-auto'
     data={MenuList}

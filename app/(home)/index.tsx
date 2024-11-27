@@ -5,7 +5,7 @@ import MenuBlock from '@/components/menus/MenuBlock';
 
 const MenuList=[
   {Mname:'Crops', linkname:'../(crops)/CropHome'},
-  {Mname:'Livestock', linkname:'../(livestock)/liveStockMenu'},
+  {Mname:'Livestock', linkname:'../(Livestock)/liveStockMenu'},
   {Mname:'Finances', linkname:'../(finances)/Finances'},
   {Mname:'Weather', linkname:'../(weather)/weather'},
   {Mname:'Reports', linkname:'../(reports)/reports'},
