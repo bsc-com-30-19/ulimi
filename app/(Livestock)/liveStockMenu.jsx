@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import MenuBlock from '../../components/menus/MenuBlock'
 
 const MenuList=[
-  {Mname:'Livestock', linkname:'/Livestock', route:"LivestockPage"},
+  {Mname:'Livestock', linkname:'/LivestockPage', route:"LivestockPage"},
   {Mname:'Produce', linkname:'/ProducePage', route:"ProducePage" },
   {Mname:'Tasks', linkname:'/TaskPage', route:"TasksPage"},
 
