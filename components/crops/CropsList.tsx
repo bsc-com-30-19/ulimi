@@ -4,11 +4,14 @@ import { crops } from '@/types'
 import CropList from './CropList'
 
 const CropsList = ({crops}:{crops:crops[]}) => {
+  
   return (
     <View>
       {crops.map((crop:crops)=>{
         return(
-            <CropList cropName={crop.name} key={crop.id}/>
+          <>
+            <CropList cropName={crop.name} key={crop.id} id={crop.id}/>
+          </>
         )
       })}
     </View>

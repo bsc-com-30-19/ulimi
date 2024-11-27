@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView, ScrollViewBase } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import {useForm} from 'react-hook-form';
 import * as SQLite from 'expo-sqlite';
@@ -9,6 +9,7 @@ import CustomInput from '@/components/forms/CustomInput';
 import CustomButton from '@/components/forms/CustomButton';
 import { crops } from '@/types';
 import CropsList from '@/components/crops/CropsList';
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 type cropInputs = {
   name:string;
@@ -20,25 +21,21 @@ type cropInputs = {
 
 
 export default function AboutScreen() {
-  
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const {bottom} = useSafeAreaInsets();
   return (
     
-    <ScrollView className='flex flex-1'>
+    <View className='flex flex-1 w-full '>
       <SQLite.SQLiteProvider databaseName='LocalStorage.db'>
-        <Main />
+        <Main ModalOpen={modalOpen} SetModalOpen={setModalOpen}/>
       </SQLite.SQLiteProvider>
-    </ScrollView>
+      <AddButton onPress={()=>setModalOpen(true)} />
+    </View>
     
   );
 }
-const Main = () =>{
+const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =>{
   const db = SQLite.useSQLiteContext()
-
-  const onAddClicked = (data:any) =>{
-    insertData(data)
-      .then(()=> console.log(data))
-      .catch((e)=>console.log(e))
-  }
 
   const {control, register, handleSubmit, watch, formState:{errors}} = useForm<cropInputs>(
     {defaultValues:{
@@ -48,18 +45,16 @@ const Main = () =>{
       dateplanted: new Date('2002-12-25').getTime()/1000,
     }}
   )
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
   
   return(<>
   <View className='w-full mx-4'>
-          <CropList cropName='Maize' link='/Maize'/>
-          <CropList cropName='Tobacco' link='tobacco'/>
           <GetAndMakeCropList db={db}/>
+          
       </View>
       
-      <AddButton onPress={()=>setModalOpen(true)}/>
+      
 
-      <FormModal title='Add Crop' isOpen={modalOpen} >
+      <FormModal title='Add Crop' isOpen={ModalOpen} >
         <Text className="font-semibold text-base mb-2 text-left">Crop</Text>
         <CustomInput
           textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
@@ -110,7 +105,7 @@ const Main = () =>{
             text='Cancel' 
             className='mx-auto bg-[#B5B9AE] h-11 px-8 rounded-lg' 
             textStyle='text-[#0D1E35] text-base text-center my-auto font-semibold'
-            onPress={()=>setModalOpen(false)}
+            onPress={()=>SetModalOpen(false)}
           />
           </View>
           <View className='basis-1/2 '>
@@ -122,6 +117,7 @@ const Main = () =>{
           </View>
         </View>
       </FormModal>
+      
       </>)
 }
 const GetAndMakeCropList= ({db}:{db:SQLite.SQLiteDatabase}) =>{
@@ -136,9 +132,8 @@ const GetAndMakeCropList= ({db}:{db:SQLite.SQLiteDatabase}) =>{
   async function getData() {
     const result = await db.getAllAsync<crops>(`SELECT * FROM crops;`)
     setCrops(result)
-    console.log(result)
   }
-
+  getData()
   return(
     <CropsList crops={crops} />
   )
