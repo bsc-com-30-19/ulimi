@@ -29,14 +29,14 @@ export default function CropsList() {
 
   return (
     <View style={styles.container}>
-      <Button title="Add" onPress={() => router.push(`/test_backend/add/`)} />
+      <Button title="Add" onPress={() => router.push(`/crops/add/`)} />
       <FlatList
         data={crops}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.cropItem}
-            onPress={() => router.push(`/test_backend/${item.id}`)} // Change this
+            onPress={() => router.push(`/crops/${item.id}`)} // Change this
           >
             <Text style={styles.cropName}>{item.name}</Text>
             {/* <Text>{item.description}</Text> */}
