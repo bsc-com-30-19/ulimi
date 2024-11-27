@@ -4,7 +4,7 @@ import FlowerTulip from '../../assets/icons/crops/FlowerTulip.svg'
 import Caretright from '../../assets/icons/general/CaretRight.svg'
 import { router } from 'expo-router'
 
-const CropList = ({cropName, link}:{cropName:string, link:any}) => {
+const CropList = ({cropName, link}:{cropName:string, link?:any, id?:any}) => {
   const proceedToLink = () =>{
     router.push(link)
   }

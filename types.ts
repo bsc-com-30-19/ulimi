@@ -1,15 +1,15 @@
 export interface crops{
     id: number;
     name: string;
-    expectedyielddate: number;
+    expectedyielddate: Date;
     amountplanted: number;
-    dateplanted: number;
+    dateplanted: Date;
 }
 
 export interface harvest{
     id: number;
     name: string;
-    datharvested: number;
+    datharvested: Date;
     amountharvested: number;
 }
 
@@ -22,33 +22,33 @@ export interface storage{
 export interface croptasks{
     id: number;
     name: string;
-    duedate: number;
+    duedate: Date;
 }
 
 export interface livestocktasks{
     id: number;
     name: string;
-    duedate: number;
+    duedate: Date;
 }
 
 export interface livestock{
     id: number;
     type: 'Vaccinated' | 'Not Vaccinated' | 'Due For Vaccination';
-    dob: number;
+    dob: Date;
     vaccinationstat:string;
-    dateplanted:number;
+    dateplanted:Date;
 }
 
 export interface produce{
     id: number;
     type: string;
     amount: number;
-    datecollected: number;
+    datecollected: Date;
 }
 
 export interface finances{
     id: number;
     type: 'Expense' | 'Income';
     amount: number;
-    date: number;
+    date: Date;
 }
