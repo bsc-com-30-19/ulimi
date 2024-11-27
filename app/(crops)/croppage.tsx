@@ -52,8 +52,6 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
           
       </View>
       
-      
-
       <FormModal title='Add Crop' isOpen={ModalOpen} >
         <Text className="font-semibold text-base mb-2 text-left">Crop</Text>
         <CustomInput
@@ -134,6 +132,12 @@ const GetAndMakeCropList= ({db}:{db:SQLite.SQLiteDatabase}) =>{
     setCrops(result)
   }
   getData()
+  if (!crops){
+    return <Text className='text-center'>Add a crop</Text>
+  }
+  else if(crops.length == 0){
+    return <Text className='text-center'>Loading</Text>
+  }
   return(
     <CropsList crops={crops} />
   )

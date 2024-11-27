@@ -9,9 +9,7 @@ const CropsList = ({crops}:{crops:crops[]}) => {
     <View>
       {crops.map((crop:crops)=>{
         return(
-          <>
             <CropList cropName={crop.name} key={crop.id} id={crop.id}/>
-          </>
         )
       })}
     </View>
