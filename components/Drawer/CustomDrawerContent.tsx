@@ -14,7 +14,6 @@ const CustomDrawerContent = (props:any) => {
         <DrawerItem label='Backup Data' onPress={()=>console.log('hahahahaha')}/>
         <DrawerItem label='Sync Data' onPress={()=>console.log("Why sync?")}/>
       </DrawerContentScrollView>
-
         <LogIn/>
     </View>
   )

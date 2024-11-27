@@ -42,7 +42,6 @@ const Index = () => {
       <View className='bg-[#37520B] w-full h-full flex flex-1'>
     <Text className='m-auto text-8xl font-extrabold text-white'>Ulimi</Text>
     <ActivityIndicator size={"large"} />
-    <Text>Loading Database</Text>
     </View>
     }
     >
@@ -53,10 +52,6 @@ const Index = () => {
       <Redirect href="/(home)"/>
       </SQLite.SQLiteProvider>
     </Suspense>
-    // <View className='bg-[#37520B] w-full h-full'>
-    // <Redirect href="/(home)"/>
-    // <Text className='m-auto text-8xl font-extrabold text-white'>Ulimi</Text>
-    // </View>
   )
 }
 
