@@ -5,9 +5,11 @@ import * as SQLite from 'expo-sqlite';
 import AddButton from '@/components/forms/AddButton';
 import FormModal from '@/components/forms/FormModal';
 import CustomInput from '@/components/forms/CustomInput';
+import CustomPicker from '@/components/forms/CustomPicker';
 import { livestock } from '@/types';
 import LiveStocksList from '@/components/livestock/liveStocksList';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {Picker} from '@react-native-picker/picker'
 
 type livestockInputs = {
   type:string;
@@ -101,6 +103,7 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
 }
 
 const ModalForm =({control}:{control:any})=>{
+  
   return(
     <>
     <Text className="font-semibold text-base mb-2 text-left">LiveStock Type</Text>
@@ -126,7 +129,7 @@ const ModalForm =({control}:{control:any})=>{
         />
 
         <Text className="font-semibold text-base mb-2 text-left">Vaccination Status</Text>
-        <CustomInput
+        {/* <CustomInput
           textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
           name="vaccinationstat"
           placeholder="Vaccinated/Not Vaccinated/Due for Vaccination"
@@ -134,7 +137,8 @@ const ModalForm =({control}:{control:any})=>{
           rules={{
             required:'Please enter vaccination Status',
           }}
-        />
+        /> */}
+        <CustomPicker control={control} name='vaccinationstat' />
   </>
   )
 }

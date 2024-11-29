@@ -17,7 +17,7 @@ type cropInputs = {
 
 const CropDetails = () => {
     const {id} = useLocalSearchParams()
-    console.log(id)
+    
   return (
     <View className='flex flex-col'>
          <SQLite.SQLiteProvider databaseName='LocalStorage.db'>
