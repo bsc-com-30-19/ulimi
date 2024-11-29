@@ -29,48 +29,83 @@ const CropDetails = () => {
 
 const Main = ({id}:{id:string|string[]}) => {
     const [ModalOpen, OpenModal] = useState<boolean>(false)
+    const [cropdeets, setCropDeets] = useState<crops[]>([])
     const db = SQLite.useSQLiteContext()
-    let crop = getCropDetails({db, id})
     
+    const EditCropModal = ({ModalOpen, CloseModal, crop, db}:{ModalOpen:boolean, CloseModal:any, crop:crops[], db:SQLite.SQLiteDatabase}) =>{
+    
+    const {control, handleSubmit, formState:{errors}} = useForm<cropInputs>(
+          {defaultValues:{
+            name:crop[0].name,
+            expectedyielddate: crop[0].expectedyielddate,
+            amountplanted: crop[0].amountplanted,
+            dateplanted: crop[0].dateplanted,
+          }}
+        )
+      const id = crop[0].id
+  
+      return(
+      <FormModal 
+          title='Edit Crops' 
+          isOpen={ModalOpen} 
+          onPressB1={CloseModal} 
+          onPressB2={
+              handleSubmit(async(data)=>{
+              await editDatabaseCropData({db,data,id})
+              .catch((e)=>console.error(e))
+              CloseModal()})}
+          B2text='Save'>
+          <EditCropModalForm control={control}/>
+      </FormModal>)
+  }
 
-    if (!crop || crop.length == 0){
+    const editDatabaseCropData = async({db,data,id}:{db:SQLite.SQLiteDatabase,data:cropInputs,id:number}) =>{
+
+      db.withTransactionAsync(async() =>{
+        await db.runAsync(
+          `UPDATE crops SET name=?, expectedyielddate=?, amountplanted=?, dateplanted=? WHERE id=?;`, 
+          [data.name, data.expectedyielddate, data.amountplanted, data.dateplanted,id])
+      })
+        .then(async()=>{
+          await refetchcrop()
+          OpenModal(false)
+        })
+        .catch((e)=>console.error(e))
+  }
+
+    const refetchcrop = useCallback(()=>{
+      async function refetch() {
+        await db.withExclusiveTransactionAsync( async () =>{
+        await setCropDeets( await db.getAllAsync<crops>(`SELECT * FROM crops WHERE id=${id};`));
+      });
+      }
+      refetch()
+      .catch((e)=>{console.error(e)});
+      }, 
+    [cropdeets])
+  
+    useEffect(()=>{refetchcrop()},[])
+
+    if (!cropdeets || cropdeets.length == 0){
         return <Text>Loading...</Text>
     }
     
     return(
         <>
         <View className='mx-4 flex flex-col h-full'>
-            <Text className='text-4xl font-medium my-10'>{crop[0].name}</Text>
+            <Text className='text-4xl font-medium my-10'>{cropdeets[0].name}</Text>
             <Text className='text-2xl font-medium my-2'>Details</Text>
-            <InformationRows detailName='Expected Yield date:' detail={crop[0].expectedyielddate}/>
-            <InformationRows detailName='Amount Planted:' detail={`${crop[0].amountplanted} Acres`}/>
-            <InformationRows detailName='Date Planted:' detail={crop[0].dateplanted}/>
+            <InformationRows detailName='Expected Yield date:' detail={cropdeets[0].expectedyielddate}/>
+            <InformationRows detailName='Amount Planted:' detail={`${cropdeets[0].amountplanted} Acres`}/>
+            <InformationRows detailName='Date Planted:' detail={cropdeets[0].dateplanted}/>
             <SQLite.SQLiteProvider databaseName='LocalStorage.db'>
-            <EditCropModal ModalOpen={ModalOpen} CloseModal={()=>OpenModal(false)} crop={crop} db={db}/>
+            <EditCropModal ModalOpen={ModalOpen} CloseModal={()=>OpenModal(false)} crop={cropdeets} db={db}/>
             </SQLite.SQLiteProvider>
             <EditButton onPress={()=>OpenModal(true)}/>
         </View>
         </>
     )
 
-}
-
-const getCropDetails = ({db,id}:{db:SQLite.SQLiteDatabase,id:string|string[]|number}) =>{
-    const [crops, setCrops] = useState<crops[]>([]);
-    
-    useEffect(()=>{db.withTransactionAsync(async()=>{
-        await getData()
-        .then(()=>console.log(crops))
-        .catch((e)=>console.error(e))
-    })}, [db])
-    
-    async function getData() {
-        const result = await db.getAllAsync<crops>(`SELECT * FROM crops WHERE id=${id};`)
-        await setCrops(result)
-        await console.log(result)
-  }
-
-  return crops
 }
 
 const InformationRows = ({detailName, detail}:{detailName:string, detail:any}) => {
@@ -82,34 +117,7 @@ const InformationRows = ({detailName, detail}:{detailName:string, detail:any}) =
     )
 }
 
-const EditCropModal = ({ModalOpen, CloseModal, crop, db}:{ModalOpen:boolean, CloseModal:any, crop:crops[], db:SQLite.SQLiteDatabase}) =>{
-    
-    const {control, register, handleSubmit, watch, formState:{errors}} = useForm<cropInputs>(
-        {defaultValues:{
-          name:crop[0].name,
-          expectedyielddate: crop[0].expectedyielddate,
-          amountplanted: crop[0].amountplanted,
-          dateplanted: crop[0].dateplanted,
-        }}
-      )
-    const id = crop[0].id
-
-    return(
-    <FormModal 
-        title='Edit Crops' 
-        isOpen={ModalOpen} 
-        onPressB1={CloseModal} 
-        onPressB2={
-            handleSubmit(async(data)=>{
-            editDatabaseCropData({db,data,id})
-            .catch((e)=>console.error(e))
-            CloseModal()})}
-        B2text='Save'>
-        <EditCropModalForm crop={crop} control={control}/>
-    </FormModal>)
-}
-
-const EditCropModalForm =({crop, control}:{crop:crops[], control:any}) =>{
+const EditCropModalForm =({control}:{control:any}) =>{
     return(
         <>
         <Text className="font-semibold text-base mb-2 text-left">Crop</Text>
@@ -145,20 +153,6 @@ const EditCropModalForm =({crop, control}:{crop:crops[], control:any}) =>{
         />
         </>
     )
-}
-
-
-
-
-const editDatabaseCropData = async({db,data,id}:{db:SQLite.SQLiteDatabase,data:cropInputs,id:number}) =>{
-
-    db.withTransactionAsync(async() =>{
-      await db.runAsync(
-        `UPDATE crops SET name=?, expectedyielddate=?, amountplanted=?, dateplanted=? WHERE id=?;`, 
-        [data.name, data.expectedyielddate, data.amountplanted, data.dateplanted,id])
-    })
-      .then(()=>console.log('Data Updated'))
-      .catch((e)=>console.error(e))
 }
 
 export default CropDetails

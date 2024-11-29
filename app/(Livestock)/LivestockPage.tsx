@@ -100,8 +100,6 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
       </>)
 }
 
-
-
 const ModalForm =({control}:{control:any})=>{
   return(
     <>
@@ -123,18 +121,18 @@ const ModalForm =({control}:{control:any})=>{
           placeholder="25/12/2002"
           control={control}
           rules={{
-            required:'Please date of birth',
+            required:'Please enter date of birth',
           }}
         />
 
         <Text className="font-semibold text-base mb-2 text-left">Vaccination Status</Text>
         <CustomInput
           textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
-          name="vacin"
-          placeholder="100.2"
+          name="vaccinationstat"
+          placeholder="Vaccinated/Not Vaccinated/Due for Vaccination"
           control={control}
           rules={{
-            required:'thehehehr',
+            required:'Please enter vaccination Status',
           }}
         />
   </>

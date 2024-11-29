@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {useForm} from 'react-hook-form';
 import * as SQLite from 'expo-sqlite';
 import AddButton from '@/components/forms/AddButton';
@@ -32,9 +32,35 @@ export default function AboutScreen() {
 }
 
 const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =>{
-  const db = SQLite.useSQLiteContext()
+  const db = SQLite.useSQLiteContext();
+  const [cropItems, setCropItems] = useState<crops[]>([]);
 
-  const {control, register, handleSubmit, watch, formState:{errors}} = useForm<cropInputs>(
+  const MakeCropList = () =>{ 
+    console.log(cropItems);
+    if (cropItems.length == 0){
+      return <Text className='text-center'>Add Crop</Text>
+    }
+    else{
+      return(
+        <CropsList crops={cropItems} />
+      )
+    }
+  }
+
+  const refetchcrop = useCallback(()=>{
+    async function refetch() {
+      await db.withExclusiveTransactionAsync( async () =>{
+      await setCropItems( await db.getAllAsync<crops>(`SELECT * FROM crops;`));
+    });
+    }
+    refetch()
+    .catch((e)=>{console.error(e)});
+    }, 
+  [cropItems])
+
+  useEffect(()=>{refetchcrop()},[])
+
+  const {control, handleSubmit, formState:{errors}} = useForm<cropInputs>(
     {defaultValues:{
       name:'',
       expectedyielddate: new Date('2002-12-25').getTime()/1000,
@@ -43,9 +69,22 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
     }}
   )
   
+  const insertData = async({db,data}:{db:SQLite.SQLiteDatabase,data:cropInputs}) =>{
+
+    db.withTransactionAsync(async() =>{
+      await db.runAsync(
+        `INSERT INTO crops (name, expectedyielddate, amountplanted, dateplanted) VALUES (?, ?, ?, ?);`, 
+        [data.name, data.expectedyielddate, data.amountplanted, data.dateplanted])
+    })
+      .then(async()=>{
+        await refetchcrop()
+        SetModalOpen(false)})
+      .catch((e)=>console.error(e))
+  }
+
   return(<>
   <View className='w-full mx-4'>
-          <GetAndMakeCropList db={db}/>
+      <MakeCropList/>  
           
       </View>
       
@@ -105,41 +144,3 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
       </>)
 }
 
-const GetAndMakeCropList= ({db}:{db:SQLite.SQLiteDatabase}) =>{
-  
-  const [crops, setCrops] = useState<crops[]>([]);
-
-  async function getData() {
-    const result = await db.getAllAsync<crops>(`SELECT * FROM crops;`)
-    setCrops(result)
-  }
-
-  useEffect(()=>{db.withTransactionAsync(async()=>{
-    await getData()
-      .then(()=>console.log('Crops recovered'))
-      .catch((e)=>console.error(e))
-  })}, [db])
-  
-  
-
-  if (!crops){
-    return <Text className='text-center'>Add a crop</Text>
-  }
-  else if(crops.length == 0){
-    return <Text className='text-center'>Loading</Text>
-  }
-  return(
-    <CropsList crops={crops} />
-  )
-}
-
-const insertData = async({db,data}:{db:SQLite.SQLiteDatabase,data:cropInputs}) =>{
-
-  db.withTransactionAsync(async() =>{
-    await db.runAsync(
-      `INSERT INTO crops (name, expectedyielddate, amountplanted, dateplanted) VALUES (?, ?, ?, ?);`, 
-      [data.name, data.expectedyielddate, data.amountplanted, data.dateplanted])
-  })
-    .then(()=>console.log('data inserted'))
-    .catch((e)=>console.error(e))
-}
