@@ -82,6 +82,8 @@ export default function DataScreen(): JSX.Element {
             width={320}
             height={220}
             fromZero
+            yAxisLabel=""
+            yAxisSuffix=" days"
             chartConfig={{
               backgroundColor: '#f3f3f3',
               backgroundGradientFrom: '#e3e3e3',
