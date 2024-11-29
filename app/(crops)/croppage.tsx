@@ -8,6 +8,7 @@ import CustomInput from '@/components/forms/CustomInput';
 import { crops } from '@/types';
 import CropsList from '@/components/crops/CropsList';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFocusEffect } from 'expo-router';
 
 type cropInputs = {
   name:string;
@@ -36,7 +37,7 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
   const [cropItems, setCropItems] = useState<crops[]>([]);
 
   const MakeCropList = () =>{ 
-    console.log(cropItems);
+    refetchcrop()
     if (cropItems.length == 0){
       return <Text className='text-center'>Add Crop</Text>
     }
@@ -59,7 +60,7 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
   [cropItems])
 
   useEffect(()=>{refetchcrop()},[])
-
+    
   const {control, handleSubmit, formState:{errors}} = useForm<cropInputs>(
     {defaultValues:{
       name:'',
@@ -81,7 +82,9 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
         SetModalOpen(false)})
       .catch((e)=>console.error(e))
   }
-
+  if (!cropItems){
+    return <Text className='text-center'>Loading..</Text>
+  }
   return(<>
   <View className='w-full mx-4'>
       <MakeCropList/>  

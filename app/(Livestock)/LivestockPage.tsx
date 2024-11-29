@@ -53,7 +53,7 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
     db.withTransactionAsync(async() =>{
       await db.runAsync(
         `INSERT INTO livestock (type, dob, vaccinationstat) VALUES (?, ?, ?);`, 
-        [data.type, data.dob, data.vaccinationstat, ])
+        [data.type, data.dob, data.vaccinationstat])
     })
       .then(async()=>{
         await refetchLivestock()
