@@ -8,7 +8,7 @@ const MenuList=[
   {Mname:'Crops', linkname:'./croppage'},
   {Mname:'Storage', linkname:'./storage/Storage'},
   {Mname:'Tasks', linkname:'./task/TaskList'},
-  {Mname:'Harvests', linkname:'./harvest/HarvestList'},
+  {Mname:'Harvests', linkname:'./harvest/Harvest'},
 ]
 
 const Home = () => {

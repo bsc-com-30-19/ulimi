@@ -7,8 +7,6 @@ import FormModal from '@/components/forms/FormModal';
 import CustomInput from '@/components/forms/CustomInput';
 import { crops } from '@/types';
 import CropsList from '@/components/crops/CropsList';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useFocusEffect } from 'expo-router';
 
 type cropInputs = {
   name:string;
@@ -19,7 +17,7 @@ type cropInputs = {
 
 export default function AboutScreen() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const {bottom} = useSafeAreaInsets();
+
   return (
     
     <View className='flex flex-1 w-full '>
@@ -37,7 +35,7 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
   const [cropItems, setCropItems] = useState<crops[]>([]);
 
   const MakeCropList = () =>{ 
-    refetchcrop()
+    
     if (cropItems.length == 0){
       return <Text className='text-center'>Add Crop</Text>
     }
@@ -52,6 +50,7 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
     async function refetch() {
       await db.withExclusiveTransactionAsync( async () =>{
       await setCropItems( await db.getAllAsync<crops>(`SELECT * FROM crops;`));
+      
     });
     }
     refetch()
@@ -60,7 +59,7 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
   [cropItems])
 
   useEffect(()=>{refetchcrop()},[])
-    
+   
   const {control, handleSubmit, formState:{errors}} = useForm<cropInputs>(
     {defaultValues:{
       name:'',

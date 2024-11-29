@@ -9,7 +9,7 @@ export interface crops{
 export interface harvest{
     id: number;
     name: string;
-    datharvested: Date;
+    dateharvested: Date;
     amountharvested: number;
 }
 

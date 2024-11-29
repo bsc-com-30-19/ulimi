@@ -38,7 +38,7 @@ const Main = ({id}:{id:string|string[]}) => {
           {defaultValues:{
             name:crop[0].name,
             expectedyielddate: crop[0].expectedyielddate,
-            amountplanted: crop[0].amountplanted,
+            amountplanted: crop[0].amountplanted.toLocaleString(),
             dateplanted: crop[0].dateplanted,
           }}
         )

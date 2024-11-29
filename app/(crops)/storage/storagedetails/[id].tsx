@@ -42,8 +42,9 @@ const Main = ({id}:{id:string|string[]}) => {
   
       return(
         <FormModal 
-        title='Add Storage' 
+        title='Edit Storage' 
         isOpen={ModalOpen} 
+        B2text='Save'
         onPressB1={()=>OpenModal(false)} 
         onPressB2={handleSubmit((data)=>(editStoreData({db, data, id}) 
                                           .catch((e)=>console.error(e))))}
@@ -59,7 +60,7 @@ const Main = ({id}:{id:string|string[]}) => {
             }}
           />
   
-          <Text className="font-semibold text-base mb-2 text-left">Amount In storage</Text>
+          <Text className="font-semibold text-base mb-2 text-left">Amount In storage in kilograms</Text>
           <CustomInput
             textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
             name="amountinstorage"

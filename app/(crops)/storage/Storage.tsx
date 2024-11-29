@@ -104,7 +104,7 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
           }}
         />
 
-        <Text className="font-semibold text-base mb-2 text-left">Amount In storage</Text>
+        <Text className="font-semibold text-base mb-2 text-left">Amount In storage in kilograms</Text>
         <CustomInput
           textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
           name="amountinstorage"
