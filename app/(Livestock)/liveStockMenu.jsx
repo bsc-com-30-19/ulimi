@@ -3,14 +3,14 @@ import { FlatList } from 'react-native';
 import MenuBlock from '../../components/menus/MenuBlock'
 
 const MenuList=[
-  {Mname:'Livestock', linkname:'/Livestock', route:"LivestockPage"},
+  {Mname:'Livestock', linkname:'/LivestockPage', route:"LivestockPage"},
   {Mname:'Produce', linkname:'/ProducePage', route:"ProducePage" },
   {Mname:'Tasks', linkname:'/TaskPage', route:"TasksPage"},
 
 ]
 
 
-export default function Dashboard({ navigation }) {
+export default function Dashboard() {
   return(<FlatList
   className='flex flex-row flex-wrap mx-auto'
     data={MenuList}
