@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS harvest (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(255) NOT NULL,
     dateharvested DATE NOT NULL,
-    amountharvested DECIMAL(10,2) NOT NULL);
+    amountharvested DECIMAL(10,2) NOT NULL,
+    unit VARCHAR(100) NOT NULL);
 
 -- Create storage Table
 CREATE TABLE IF NOT EXISTS storage (

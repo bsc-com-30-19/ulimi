@@ -129,15 +129,6 @@ const ModalForm =({control}:{control:any})=>{
         />
 
         <Text className="font-semibold text-base mb-2 text-left">Vaccination Status</Text>
-        {/* <CustomInput
-          textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
-          name="vaccinationstat"
-          placeholder="Vaccinated/Not Vaccinated/Due for Vaccination"
-          control={control}
-          rules={{
-            required:'Please enter vaccination Status',
-          }}
-        /> */}
         <CustomPicker control={control} name='vaccinationstat' />
   </>
   )

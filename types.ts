@@ -43,6 +43,7 @@ export interface produce{
     type: string;
     amount: number;
     datecollected: Date;
+    unit: string;
 }
 
 export interface finances{
