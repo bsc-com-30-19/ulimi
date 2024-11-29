@@ -5,9 +5,9 @@ import { router } from 'expo-router'
 import { livestock } from '@/types'
 import Caretright from '../../assets/icons/general/CaretRight.svg'
 
-const LivesStockList = ({livestocktype, id}:{livestocktype:string, id?:any}) => {
+const LivesStockList = ({livestocktype, type}:{livestocktype:string, type?:any}) => {
     const proceedToLink = () =>{
-        router.push({pathname:'/(Livestock)/animaldeets/[id]', params:{id}})
+        router.push({pathname:'/(Livestock)/animaldeets/[type]', params:{type}})
       }
       return (
         <Pressable className='flex flex-row w-full my-2' onPress={proceedToLink}>

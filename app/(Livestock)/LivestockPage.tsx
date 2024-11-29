@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {useForm} from 'react-hook-form';
 import * as SQLite from 'expo-sqlite';
 import AddButton from '@/components/forms/AddButton';
@@ -32,6 +32,46 @@ export default function LivestockPage() {
 
 const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =>{
   const db = SQLite.useSQLiteContext()
+  const [livestockItems, setLivestockItems] = useState<livestock[]>([])
+
+  const MakeLivestockList = () =>{ 
+    console.log(livestockItems);
+    if (livestockItems.length == 0){
+      return <Text className='text-center'>Add Livestock</Text>
+    }
+    else{
+      return(
+        <LiveStocksList livestocks={livestockItems} />
+      )
+    }
+  }
+
+  const insertData = async({db,data}:{db:SQLite.SQLiteDatabase,data:livestockInputs}) =>{
+
+    db.withTransactionAsync(async() =>{
+      await db.runAsync(
+        `INSERT INTO livestock (type, dob, vaccinationstat) VALUES (?, ?, ?);`, 
+        [data.type, data.dob, data.vaccinationstat, ])
+    })
+      .then(async()=>{
+        await refetchLivestock()
+        SetModalOpen(false)})
+      .catch((e)=>console.error(e))
+  }
+
+  const refetchLivestock = useCallback(()=>{
+    async function refetch() {
+      await db.withExclusiveTransactionAsync( async () =>{
+      await setLivestockItems( await db.getAllAsync<livestock>(`SELECT * FROM livestock GROUP BY type;`));
+    });
+    }
+
+    refetch()
+    .catch((e)=>{console.error(e)});
+    }, 
+  [livestockItems])
+
+  useEffect(()=>{refetchLivestock()},[])
 
   const {control, handleSubmit, formState:{errors}} = useForm<livestockInputs>(
     {defaultValues:{
@@ -43,7 +83,7 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
   
   return(<>
   <View className='w-full mx-4'>
-          <GetAndMakelivestockList db={db}/>
+          <MakeLivestockList/>
           
       </View>
       
@@ -51,7 +91,7 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
       title='Add Crop' 
       isOpen={ModalOpen} 
       onPressB1={()=>SetModalOpen(false)} 
-      onPressB2={handleSubmit((data)=>(insertData({db, data}) 
+      onPressB2={ handleSubmit((data)=>(insertData({db, data}) 
                                         .catch((e)=>console.error(e))))}
       >
         <ModalForm  control={control}/>
@@ -60,44 +100,7 @@ const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =
       </>)
 }
 
-const GetAndMakelivestockList= ({db}:{db:SQLite.SQLiteDatabase}) =>{
-  
-  const [livestock, setLivestock] = useState<livestock[]>([]);
 
-  async function getData() {
-    const result = await db.getAllAsync<livestock>(`SELECT * FROM livestock;`)
-    setLivestock(result)
-  }
-
-  useEffect(()=>{db.withTransactionAsync(async()=>{
-    await getData()
-      .then(()=>console.log('livestock recovered'))
-      .catch((e)=>console.error(e))
-  })}, [db])
-  
-  
-
-  if (!livestock){
-    return <Text className='text-center'>Add a crop</Text>
-  }
-  else if(livestock.length == 0){
-    return <Text className='text-center'>Loading</Text>
-  }
-  return(
-    <LiveStocksList livestocks={livestock} />
-  )
-}
-
-const insertData = async({db,data}:{db:SQLite.SQLiteDatabase,data:livestockInputs}) =>{
-
-  db.withTransactionAsync(async() =>{
-    await db.runAsync(
-      `INSERT INTO livestock (type, dob, vaccinationstat) VALUES (?, ?, ?);`, 
-      [data.type, data.dob, data.vaccinationstat, ])
-  })
-    .then(()=>console.log('data inserted'))
-    .catch((e)=>console.error(e))
-}
 
 const ModalForm =({control}:{control:any})=>{
   return(

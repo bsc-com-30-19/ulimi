@@ -9,7 +9,7 @@ const LiveStocksList = ({livestocks}:{livestocks:livestock[]}) => {
     <View>
       {livestocks.map((livestock:livestock)=>{
         return(
-            <LivesStockList livestocktype={livestock.type} key={livestock.id} id={livestock.id}/>
+            <LivesStockList livestocktype={livestock.type} key={livestock.type} type={livestock.type}/>
         )
       })}
     </View>

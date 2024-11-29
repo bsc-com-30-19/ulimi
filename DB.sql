@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS livestock (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     type VARCHAR(100) NOT NULL,
     dob DATE NOT NULL,
-    vaccinationstat NOT NULL CHECK (vaccinationstat IN('Vaccinated, Not Vaccinated, Due For Vaccination')),
+    vaccinationstat NOT NULL CHECK (vaccinationstat IN('Vaccinated', 'Not Vaccinated','Due For Vaccination')),
     --delete dateplanted DATE NOT NULL
     );
 
