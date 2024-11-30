@@ -9,7 +9,7 @@ export interface crops{
 export interface harvest{
     id: number;
     name: string;
-    datharvested: Date;
+    dateharvested: Date;
     amountharvested: number;
 }
 
@@ -33,10 +33,9 @@ export interface livestocktasks{
 
 export interface livestock{
     id: number;
-    type: 'Vaccinated' | 'Not Vaccinated' | 'Due For Vaccination';
+    type: string;
     dob: Date;
-    vaccinationstat:string;
-    dateplanted:Date;
+    vaccinationstat:'Vaccinated' | 'Not Vaccinated' | 'Due For Vaccination';
 }
 
 export interface produce{
@@ -44,6 +43,7 @@ export interface produce{
     type: string;
     amount: number;
     datecollected: Date;
+    unit: string;
 }
 
 export interface finances{

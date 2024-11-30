@@ -6,7 +6,7 @@ import { router } from 'expo-router'
 
 const CropList = ({cropName, id}:{cropName:string, id?:any}) => {
   const proceedToLink = () =>{
-    router.push({pathname:'/(crops)/cropDetails/[id]', params:{id}})
+    router.push({pathname:'./cropDetails/[id]', params:{id}})
   }
   return (
     <Pressable className='flex flex-row w-full my-2' onPress={proceedToLink}>

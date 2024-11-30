@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS harvest (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(255) NOT NULL,
     dateharvested DATE NOT NULL,
-    amountharvested DECIMAL(10,2) NOT NULL);
+    amountharvested DECIMAL(10,2) NOT NULL,
+    unit VARCHAR(100) NOT NULL);
 
 -- Create storage Table
 CREATE TABLE IF NOT EXISTS storage (
@@ -33,8 +34,7 @@ CREATE TABLE IF NOT EXISTS livestock (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     type VARCHAR(100) NOT NULL,
     dob DATE NOT NULL,
-    vaccinationstat NOT NULL CHECK (vaccinationstat IN('Vaccinated, Not Vaccinated, Due For Vaccination')),
-    dateplanted DATE NOT NULL);
+    vaccinationstat NOT NULL CHECK (vaccinationstat IN('Vaccinated', 'Not Vaccinated','Due For Vaccination')));
 
 -- Create Produce Table
 CREATE TABLE IF NOT EXISTS produce (

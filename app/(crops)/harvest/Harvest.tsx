@@ -5,19 +5,19 @@ import * as SQLite from 'expo-sqlite';
 import AddButton from '@/components/forms/AddButton';
 import FormModal from '@/components/forms/FormModal';
 import CustomInput from '@/components/forms/CustomInput';
-import { crops } from '@/types';
-import CropsList from '@/components/crops/CropsList';
+import { harvest } from '@/types';
+import HarvestList from '@/components/harvests/HarvestList';
 
-type cropInputs = {
-  name:string;
-  expectedyielddate:number;
-  amountplanted:number;
-  dateplanted:number;
+type harvestInputs = {
+    name: string;
+    dateharvested: number;
+    amountharvested: number;
 }
 
-export default function AboutScreen() {
+export default function Harvest() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-
+  
+  
   return (
     
     <View className='flex flex-1 w-full '>
@@ -32,117 +32,100 @@ export default function AboutScreen() {
 
 const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =>{
   const db = SQLite.useSQLiteContext();
-  const [cropItems, setCropItems] = useState<crops[]>([]);
-
-  const MakeCropList = () =>{ 
+  const [harvestItems, setHarvestItems] = useState<harvest[]>([])
+  
+  const MakeHarvestList = () =>{ 
     
-    if (cropItems.length == 0){
-      return <Text className='text-center'>Add Crop</Text>
+    if (harvestItems.length == 0){
+      return <Text className='text-center'>Add item in Harvest</Text>
     }
     else{
       return(
-        <CropsList crops={cropItems} />
+        <HarvestList harvests={harvestItems}/>
       )
     }
   }
 
-  const refetchcrop = useCallback(()=>{
+  const refetchharvest = useCallback(()=>{
     async function refetch() {
       await db.withExclusiveTransactionAsync( async () =>{
-      await setCropItems( await db.getAllAsync<crops>(`SELECT * FROM crops;`));
-      
+      await setHarvestItems( await db.getAllAsync<harvest>(`SELECT * FROM harvest;`));
     });
     }
     refetch()
     .catch((e)=>{console.error(e)});
     }, 
-  [cropItems])
-
-  useEffect(()=>{refetchcrop()},[])
-   
-  const {control, handleSubmit, formState:{errors}} = useForm<cropInputs>(
+  [harvestItems])
+  
+  useEffect(()=>{refetchharvest()},[])
+  
+  const {control, handleSubmit, formState:{errors}} = useForm<harvestInputs>(
     {defaultValues:{
       name:'',
-      expectedyielddate: new Date('2002-12-25').getTime()/1000,
-      amountplanted: 100.5,
-      dateplanted: new Date('2002-12-25').getTime()/1000,
+      dateharvested: new Date('2002-12-25').getTime()/1000,
     }}
   )
-  
-  const insertData = async({db,data}:{db:SQLite.SQLiteDatabase,data:cropInputs}) =>{
+
+  const insertData = async({db,data}:{db:SQLite.SQLiteDatabase,data:harvestInputs}) =>{
 
     db.withTransactionAsync(async() =>{
       await db.runAsync(
-        `INSERT INTO crops (name, expectedyielddate, amountplanted, dateplanted) VALUES (?, ?, ?, ?);`, 
-        [data.name, data.expectedyielddate, data.amountplanted, data.dateplanted])
+        `INSERT INTO harvest (name, dateharvested, amountharvested) VALUES (?, ?, ?);`, 
+        [data.name, data.dateharvested, data.amountharvested, ])
     })
       .then(async()=>{
-        await refetchcrop()
+        await refetchharvest()
         SetModalOpen(false)})
       .catch((e)=>console.error(e))
   }
-  if (!cropItems){
-    return <Text className='text-center'>Loading..</Text>
-  }
+
   return(<>
   <View className='w-full mx-4'>
-      <MakeCropList/>  
+      <MakeHarvestList/>  
           
       </View>
       
       <FormModal 
-      title='Add Crop' 
+      title='Add Harvest' 
       isOpen={ModalOpen} 
       onPressB1={()=>SetModalOpen(false)} 
       onPressB2={handleSubmit((data)=>(insertData({db, data}) 
                                         .catch((e)=>console.error(e))))}
-      >
-        
+      > 
         <Text className="font-semibold text-base mb-2 text-left">Crop</Text>
         <CustomInput
           textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
           name="name"
-          placeholder="Maize"
+          placeholder="Name of Harvest"
           control={control}
           rules={{
             required:'Please enter crop Name',
           }}
         />
 
-        <Text className="font-semibold text-base mb-2 text-left">Expected Yield date</Text>
+        <Text className="font-semibold text-base mb-2 text-left">Date Harvested</Text>
         <CustomInput
           textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
-          name="expectedyielddate"
-          placeholder="25/12/2002"
+          name="dateharvested"
+          placeholder="dd/mm/yyyy"
           control={control}
           rules={{
-            required:'Please enter expected yield date',
+            required:'Please enter date harvested',
           }}
         />
-
-        <Text className="font-semibold text-base mb-2 text-left">Amount planted in acres</Text>
+        
+        <Text className="font-semibold text-base mb-2 text-left">Amount Harvested in Kilograms</Text>
         <CustomInput
           textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
-          name="amountplanted"
-          placeholder="100.2"
+          name="amountharvested"
+          placeholder="Amount in kilograms"
           control={control}
           rules={{
-            required:'Please enter amount planted',
-          }}
-        />
-
-        <Text className="font-semibold text-base mb-2 text-left">Date Planted</Text>
-        <CustomInput
-          textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
-          name="dateplanted"
-          placeholder="25/12/2002"
-          control={control}
-          rules={{
-            required:'Please enter Date planted',
+            required:'Please enter amount harvested',
           }}
         />
       </FormModal>
-      
       </>)
 }
+
 

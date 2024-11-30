@@ -5,19 +5,20 @@ import * as SQLite from 'expo-sqlite';
 import AddButton from '@/components/forms/AddButton';
 import FormModal from '@/components/forms/FormModal';
 import CustomInput from '@/components/forms/CustomInput';
-import { crops } from '@/types';
-import CropsList from '@/components/crops/CropsList';
+import { produce } from '@/types';
+import ProduceTypeList from '@/components/produce/ProduceTypeList';
 
-type cropInputs = {
-  name:string;
-  expectedyielddate:number;
-  amountplanted:number;
-  dateplanted:number;
+type produceInputs = {
+  type: string;
+  amount: number;
+  datecollected: number;
+  unit: string;
 }
 
-export default function AboutScreen() {
+export default function Produce() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-
+  
+  
   return (
     
     <View className='flex flex-1 w-full '>
@@ -32,117 +33,113 @@ export default function AboutScreen() {
 
 const Main = ({ModalOpen, SetModalOpen}:{ModalOpen:boolean, SetModalOpen:any}) =>{
   const db = SQLite.useSQLiteContext();
-  const [cropItems, setCropItems] = useState<crops[]>([]);
-
-  const MakeCropList = () =>{ 
+  const [produceItems, setProduceItems] = useState<produce[]>([])
+  
+  const MakeProduceList = () =>{ 
     
-    if (cropItems.length == 0){
-      return <Text className='text-center'>Add Crop</Text>
+    if (produceItems.length == 0){
+      return <Text className='text-center'>Add item in Produce</Text>
     }
     else{
       return(
-        <CropsList crops={cropItems} />
+        <ProduceTypeList produces={produceItems}/>
       )
     }
   }
 
-  const refetchcrop = useCallback(()=>{
+  const refetchharvest = useCallback(()=>{
     async function refetch() {
       await db.withExclusiveTransactionAsync( async () =>{
-      await setCropItems( await db.getAllAsync<crops>(`SELECT * FROM crops;`));
-      
+      await setProduceItems( await db.getAllAsync<produce>(`SELECT * FROM produce GROUP BY type;`));
     });
     }
     refetch()
     .catch((e)=>{console.error(e)});
     }, 
-  [cropItems])
-
-  useEffect(()=>{refetchcrop()},[])
-   
-  const {control, handleSubmit, formState:{errors}} = useForm<cropInputs>(
+  [produceItems])
+  
+  useEffect(()=>{refetchharvest()},[])
+  
+  const {control, handleSubmit, formState:{errors}} = useForm<produceInputs>(
     {defaultValues:{
-      name:'',
-      expectedyielddate: new Date('2002-12-25').getTime()/1000,
-      amountplanted: 100.5,
-      dateplanted: new Date('2002-12-25').getTime()/1000,
+      type:'Milk',
+      datecollected: new Date('2002-12-25').getTime()/1000,
+      amount:20,
+      unit: 'ml',
     }}
   )
-  
-  const insertData = async({db,data}:{db:SQLite.SQLiteDatabase,data:cropInputs}) =>{
+
+  const insertData = async({db,data}:{db:SQLite.SQLiteDatabase,data:produceInputs}) =>{
 
     db.withTransactionAsync(async() =>{
       await db.runAsync(
-        `INSERT INTO crops (name, expectedyielddate, amountplanted, dateplanted) VALUES (?, ?, ?, ?);`, 
-        [data.name, data.expectedyielddate, data.amountplanted, data.dateplanted])
+        `INSERT INTO produce (type, amount, datecollected, unit) VALUES (?, ?, ?, ?);`, 
+        [data.type, data.amount, data.datecollected, data.unit])
     })
       .then(async()=>{
-        await refetchcrop()
+        await refetchharvest()
         SetModalOpen(false)})
       .catch((e)=>console.error(e))
   }
-  if (!cropItems){
-    return <Text className='text-center'>Loading..</Text>
-  }
+
   return(<>
   <View className='w-full mx-4'>
-      <MakeCropList/>  
+      <MakeProduceList/>  
           
       </View>
       
       <FormModal 
-      title='Add Crop' 
+      title='Add Produce' 
       isOpen={ModalOpen} 
       onPressB1={()=>SetModalOpen(false)} 
       onPressB2={handleSubmit((data)=>(insertData({db, data}) 
                                         .catch((e)=>console.error(e))))}
-      >
+      > 
+        <Text className="font-semibold text-base mb-2 text-left">Produce Type</Text>
+        <CustomInput
+          textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
+          name="type"
+          placeholder="NMilk"
+          control={control}
+          rules={{
+            required:'Please enter produce type',
+          }}
+        />
+
+        <Text className="font-semibold text-base mb-2 text-left">Date collected</Text>
+        <CustomInput
+          textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
+          name="datecollected"
+          placeholder="dd/mm/yyyy"
+          control={control}
+          rules={{
+            required:'Please enter date collected',
+          }}
+        />
         
-        <Text className="font-semibold text-base mb-2 text-left">Crop</Text>
+        <Text className="font-semibold text-base mb-2 text-left">Amount of produce</Text>
         <CustomInput
           textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
-          name="name"
-          placeholder="Maize"
+          name="amount"
+          placeholder="20"
           control={control}
           rules={{
-            required:'Please enter crop Name',
+            required:'Please enter amount of Produce',
           }}
         />
 
-        <Text className="font-semibold text-base mb-2 text-left">Expected Yield date</Text>
+        <Text className="font-semibold text-base mb-2 text-left">unit</Text>
         <CustomInput
           textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
-          name="expectedyielddate"
-          placeholder="25/12/2002"
+          name="unit"
+          placeholder="ml"
           control={control}
           rules={{
-            required:'Please enter expected yield date',
-          }}
-        />
-
-        <Text className="font-semibold text-base mb-2 text-left">Amount planted in acres</Text>
-        <CustomInput
-          textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
-          name="amountplanted"
-          placeholder="100.2"
-          control={control}
-          rules={{
-            required:'Please enter amount planted',
-          }}
-        />
-
-        <Text className="font-semibold text-base mb-2 text-left">Date Planted</Text>
-        <CustomInput
-          textInputStyle="bg-[#F1F7FF] rounded-md border-2 border-[#75787C] pl-2.5 h-[44px] text-[#36455A] text-sm mb-7"
-          name="dateplanted"
-          placeholder="25/12/2002"
-          control={control}
-          rules={{
-            required:'Please enter Date planted',
+            required:'Please enter unit',
           }}
         />
       </FormModal>
-      
       </>)
 }
+
 
